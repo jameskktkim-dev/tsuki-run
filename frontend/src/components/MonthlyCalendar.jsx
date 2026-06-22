@@ -1,9 +1,19 @@
-const days = Array.from({ length: 31 }, (_, index) => index + 1);
+import { useState } from "react";
+import { entries } from "../data/mockEntries";
+import DayModal from "./DayModal";
 
-// June 2026 starts on Monday
+const days = Array.from({ length: 30 }, (_, index) => index + 1);
 const blankDays = Array.from({ length: 1 }, (_, index) => null);
 
 export default function MonthlyCalendar() {
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  const getEntryForDay = (day) => {
+    return entries.find((entry) => entry.day === day);
+  };
+
+  const selectedEntry = selectedDay ? getEntryForDay(selectedDay) : null;
+
   return (
     <div>
       <h2>June 2026</h2>
@@ -36,19 +46,39 @@ export default function MonthlyCalendar() {
           <div key={`blank-${index}`}></div>
         ))}
 
-        {days.map((day) => (
-          <div
-            key={day}
-            style={{
-              border: "1px solid #ccc",
-              height: "100px",
-              padding: "8px",
-            }}
-          >
-            {day}
-          </div>
-        ))}
+        {days.map((day) => {
+          const entry = getEntryForDay(day);
+
+          return (
+            <div
+              key={day}
+              onClick={() => setSelectedDay(day)}
+              style={{
+                border: "1px solid #ccc",
+                height: "100px",
+                padding: "8px",
+                cursor: "pointer",
+              }}
+            >
+              <div>{day}</div>
+
+              {entry?.hasPlan && (
+                <div>
+                  🟡 {entry.planType} {entry.planDistance}km
+                </div>
+              )}
+
+              {entry?.hasResult && <div>🟢 Result</div>}
+            </div>
+          );
+        })}
       </div>
+
+      <DayModal
+        selectedDay={selectedDay}
+        entry={selectedEntry}
+        onClose={() => setSelectedDay(null)}
+      />
     </div>
   );
 }
