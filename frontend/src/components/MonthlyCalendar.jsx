@@ -9,6 +9,8 @@ export default function MonthlyCalendar() {
   const [entries, setEntries] = useState(initialEntries);
   const [selectedDay, setSelectedDay] = useState(null);
 
+  const today = new Date().getDate();
+
   const getEntryForDay = (day) => {
     return entries.find((entry) => entry.day === day);
   };
@@ -35,6 +37,20 @@ export default function MonthlyCalendar() {
 
   return (
     <div>
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "16px",
+          marginBottom: "24px",
+          borderRadius: "12px",
+          backgroundColor: "#faf7f0",
+        }}
+      >
+        <h3>Monthly Goal</h3>
+        <p>150 km · 20 runs</p>
+        <p>Victoria Marathon Base Phase</p>
+      </div>
+
       <h2>June 2026</h2>
 
       <div
@@ -77,6 +93,7 @@ export default function MonthlyCalendar() {
                 height: "100px",
                 padding: "8px",
                 cursor: "pointer",
+                backgroundColor: day === today ? "#faf7f0" : "white",
               }}
             >
               <div>{day}</div>
@@ -88,6 +105,8 @@ export default function MonthlyCalendar() {
               )}
 
               {entry?.hasResult && <div>🟢 Result</div>}
+
+              {entry?.reflection && <div>📝 Reflection</div>}
             </div>
           );
         })}
