@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { entries } from "../data/mockEntries";
+import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
 
 const days = Array.from({ length: 30 }, (_, index) => index + 1);
 const blankDays = Array.from({ length: 1 }, (_, index) => null);
 
 export default function MonthlyCalendar() {
+  const [entries, setEntries] = useState(initialEntries);
   const [selectedDay, setSelectedDay] = useState(null);
 
   const getEntryForDay = (day) => {
@@ -13,6 +14,24 @@ export default function MonthlyCalendar() {
   };
 
   const selectedEntry = selectedDay ? getEntryForDay(selectedDay) : null;
+
+  const handleSaveEntry = (updatedEntry) => {
+    const existingEntry = entries.find(
+      (entry) => entry.day === updatedEntry.day
+    );
+
+    if (existingEntry) {
+      setEntries(
+        entries.map((entry) =>
+          entry.day === updatedEntry.day ? updatedEntry : entry
+        )
+      );
+    } else {
+      setEntries([...entries, updatedEntry]);
+    }
+
+    setSelectedDay(null);
+  };
 
   return (
     <div>
@@ -78,6 +97,7 @@ export default function MonthlyCalendar() {
         selectedDay={selectedDay}
         entry={selectedEntry}
         onClose={() => setSelectedDay(null)}
+        onSave={handleSaveEntry}
       />
     </div>
   );
