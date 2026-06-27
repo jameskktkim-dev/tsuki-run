@@ -1,0 +1,64 @@
+.goal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.25);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.goal-modal{
+
+  width:420px;
+
+  background:white;
+
+  padding:28px;
+
+  border-radius:16px;
+}
+
+.goal-close-button{
+
+  float:right;
+
+  border:none;
+
+  background:none;
+
+  font-size:22px;
+
+  cursor:pointer;
+}
+
+.goal-form-group{
+
+  display:flex;
+
+  flex-direction:column;
+
+  margin-top:18px;
+
+  gap:8px;
+}
+
+.goal-form-group input{
+
+  padding:10px;
+
+  border:1px solid #ddd;
+
+  border-radius:8px;
+}
+
+.goal-button-row{
+
+  margin-top:28px;
+
+  display:flex;
+
+  justify-content:flex-end;
+
+  gap:12px;
+}

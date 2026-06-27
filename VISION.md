@@ -14,3 +14,11 @@ Tsuki Run is a monthly training journal, not a social network.
 - Reflection over performance.
 - Consistency over perfection.
 - Progress over comparison.
+
+## UI Principles
+
+- Calendar first
+- Whitespace is a feature
+- Data should feel calm
+- Every click should have a purpose
+- Remove before adding

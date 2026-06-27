@@ -1,3 +1,5 @@
+import MonthlyGoal from "./MonthlyGoal";
+import GoalModal from "./GoalModal";
 import { useState, useEffect } from "react";
 import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
@@ -20,10 +22,28 @@ export default function MonthlyCalendar() {
   });
 
   const [selectedDay, setSelectedDay] = useState(null);
+  const [goal, setGoal] = useState(() => {
+    const savedGoal = localStorage.getItem("tsuki-run-goal");
 
+    if (savedGoal) {
+      return JSON.parse(savedGoal);
+    }
+
+    return {
+      distance: 150,
+      runs: 20,
+      phase: "Victoria Marathon Base Phase",
+    };
+  });
+  const [showGoalModal, setShowGoalModal] = useState(false);
+  
   useEffect(() => {
     localStorage.setItem("tsuki-run-entries", JSON.stringify(entries));
   }, [entries]);
+
+  useEffect(() => {
+    localStorage.setItem("tsuki-run-goal", JSON.stringify(goal));
+  }, [goal]);
 
   const today = new Date().getDate();
 
@@ -53,12 +73,12 @@ export default function MonthlyCalendar() {
 
   return (
     <div>
-      <div className="monthly-goal-card">
-        <h3>Monthly Goal</h3>
-        <p>150 km · 20 runs</p>
-        <p>Victoria Marathon Base Phase</p>
-      </div>
 
+    <MonthlyGoal
+      entries={entries}
+      goal={goal}
+      onEdit={() => setShowGoalModal(true)}
+    />
       <h2>June 2026</h2>
 
       <div className="weekday-grid">
@@ -96,6 +116,11 @@ export default function MonthlyCalendar() {
         entry={selectedEntry}
         onClose={() => setSelectedDay(null)}
         onSave={handleSaveEntry}
+      />
+
+      <GoalModal
+        isOpen={showGoalModal}
+        onClose={() => setShowGoalModal(false)}
       />
     </div>
   );
