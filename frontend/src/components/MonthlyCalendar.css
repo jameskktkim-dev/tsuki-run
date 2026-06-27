@@ -1,0 +1,41 @@
+.monthly-goal-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background-color: #faf7f0;
+}
+
+.weekday-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.day-cell {
+  border: 1px solid #ccc;
+  height: 100px;
+  padding: 8px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.day-cell.today {
+  background-color: #faf7f0;
+}
+
+.day-number {
+  margin-bottom: 8px;
+}
+
+.entry-line {
+  font-size: 14px;
+  line-height: 1.4;
+}

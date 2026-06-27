@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
+import "./DayModal.css";
 
 export default function DayModal({ selectedDay, entry, onClose, onSave }) {
-  const [trainingType, setTrainingType] = useState(entry?.planType || "");
-  const [distance, setDistance] = useState(entry?.planDistance || "");
-  const [reflection, setReflection] = useState(entry?.reflection || "");
-  const [hasResult, setHasResult] = useState(entry?.hasResult || false);
+  const [planType, setPlanType] = useState("");
+  const [planDistance, setPlanDistance] = useState("");
+  const [planNote, setPlanNote] = useState("");
+
+  const [resultDistance, setResultDistance] = useState("");
+  const [reflection, setReflection] = useState("");
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
-    setTrainingType(entry?.planType || "");
-    setDistance(entry?.planDistance || "");
-    setReflection(entry?.reflection || "");
-    setHasResult(entry?.hasResult || false);
+    setPlanType(entry?.plan?.type || "");
+    setPlanDistance(entry?.plan?.distance || "");
+    setPlanNote(entry?.plan?.note || "");
+
+    setResultDistance(entry?.result?.distance || "");
+    setReflection(entry?.result?.reflection || "");
+    setCompleted(entry?.result?.completed || false);
   }, [entry, selectedDay]);
 
   if (!selectedDay) return null;
@@ -18,89 +25,106 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
   const handleSave = () => {
     onSave({
       day: selectedDay,
-      planType: trainingType,
-      planDistance: distance,
-      reflection: reflection,
-      hasPlan: Boolean(trainingType || distance),
-      hasResult: hasResult,
+      plan: {
+        type: planType,
+        distance: planDistance,
+        note: planNote,
+      },
+      result: {
+        distance: resultDistance,
+        reflection,
+        completed,
+      },
     });
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        backgroundColor: "rgba(0,0,0,0.3)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          width: "420px",
-          padding: "24px",
-          borderRadius: "12px",
-        }}
-      >
-        <button onClick={onClose}>Close</button>
+    <div className="modal-backdrop">
+      <div className="day-modal">
+        <button className="modal-close-button" onClick={onClose}>
+          ×
+        </button>
 
-        <h2>June {selectedDay}</h2>
+        <h2 className="modal-title">June {selectedDay}</h2>
 
-        <label>Training Type</label>
-        <select
-          value={trainingType}
-          onChange={(event) => setTrainingType(event.target.value)}
-        >
-          <option value="">Select training type</option>
-          <option value="Easy Run">Easy Run</option>
-          <option value="Long Run">Long Run</option>
-          <option value="Tempo">Tempo</option>
-          <option value="Intervals">Intervals</option>
-          <option value="Race">Race</option>
-          <option value="Rest">Rest</option>
-        </select>
+        <h3>Plan</h3>
 
-        <br />
-        <br />
+        <div className="form-group">
+          <label>Training Type</label>
+          <select
+            value={planType}
+            onChange={(event) => setPlanType(event.target.value)}
+          >
+            <option value="">Select training type</option>
+            <option value="Easy Run">Easy Run</option>
+            <option value="Long Run">Long Run</option>
+            <option value="Tempo">Tempo</option>
+            <option value="Intervals">Intervals</option>
+            <option value="Race">Race</option>
+            <option value="Rest">Rest</option>
+          </select>
+        </div>
 
-        <label>Distance</label>
-        <input
-          type="number"
-          value={distance}
-          onChange={(event) => setDistance(event.target.value)}
-          placeholder="km"
-        />
+        <div className="form-group">
+          <label>Planned Distance</label>
+          <div className="distance-row">
+            <input
+              type="number"
+              value={planDistance}
+              onChange={(event) => setPlanDistance(event.target.value)}
+              placeholder="0"
+            />
+            <span>km</span>
+          </div>
+        </div>
 
-        <br />
-        <br />
+        <div className="form-group">
+          <label>Plan Note</label>
+          <textarea
+            rows="3"
+            value={planNote}
+            onChange={(event) => setPlanNote(event.target.value)}
+            placeholder="What is the plan?"
+          />
+        </div>
 
-        <label>Reflection</label>
-        <textarea
-          placeholder="How did it feel?"
-          rows="5"
-          value={reflection}
-          onChange={(event) => setReflection(event.target.value)}
-        />
+        <h3>Result</h3>
 
-        <br />
-        <br />
+        <div className="form-group">
+          <label>Actual Distance</label>
+          <div className="distance-row">
+            <input
+              type="number"
+              value={resultDistance}
+              onChange={(event) => setResultDistance(event.target.value)}
+              placeholder="0"
+            />
+            <span>km</span>
+          </div>
+        </div>
 
-        <label>
+        <div className="form-group">
+          <label>Reflection</label>
+          <textarea
+            rows="5"
+            value={reflection}
+            onChange={(event) => setReflection(event.target.value)}
+            placeholder="How did it feel?"
+          />
+        </div>
+
+        <label className="completed-row">
           <input
             type="checkbox"
-            checked={hasResult}
-            onChange={(event) => setHasResult(event.target.checked)}
+            checked={completed}
+            onChange={(event) => setCompleted(event.target.checked)}
           />
           Completed
         </label>
 
-        <br />
-        <br />
-
-        <button onClick={handleSave}>Save</button>
+        <button className="save-button" onClick={handleSave}>
+          Save
+        </button>
       </div>
     </div>
   );

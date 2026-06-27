@@ -1,30 +1,41 @@
 export const entries = [
   {
     day: 1,
-    planType: "Long Run",
-    planDistance: 20,
-    hasPlan: true,
-    hasResult: true,
+    plan: {
+      type: "Long Run",
+      distance: 20,
+      note: "Keep it easy",
+    },
+    result: {
+      distance: 18,
+      reflection: "Felt strong",
+      completed: true,
+    },
   },
   {
     day: 5,
-    planType: "Easy Run",
-    planDistance: 8,
-    hasPlan: true,
-    hasResult: false,
+    plan: {
+      type: "Easy Run",
+      distance: 8,
+      note: "",
+    },
+    result: {
+      distance: "",
+      reflection: "",
+      completed: false,
+    },
   },
   {
     day: 12,
-    planType: "Tempo",
-    planDistance: 10,
-    hasPlan: true,
-    hasResult: false,
-  },
-  {
-    day: 21,
-    planType: "Long Run",
-    planDistance: 18,
-    hasPlan: true,
-    hasResult: true,
+    plan: {
+      type: "Tempo",
+      distance: 10,
+      note: "",
+    },
+    result: {
+      distance: "",
+      reflection: "",
+      completed: false,
+    },
   },
 ];

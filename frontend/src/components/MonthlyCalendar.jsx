@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
+import DayCell from "./DayCell";
+import "./MonthlyCalendar.css";
 
 const days = Array.from({ length: 30 }, (_, index) => index + 1);
 const blankDays = Array.from({ length: 1 }, (_, index) => null);
 
 export default function MonthlyCalendar() {
-  const [entries, setEntries] = useState(initialEntries);
+  
+  const [entries, setEntries] = useState(() => {
+    const savedEntries = localStorage.getItem("tsuki-run-entries");
+
+    if (savedEntries) {
+      return JSON.parse(savedEntries);
+    }
+
+    return initialEntries;
+  });
+
   const [selectedDay, setSelectedDay] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("tsuki-run-entries", JSON.stringify(entries));
+  }, [entries]);
 
   const today = new Date().getDate();
 
@@ -37,15 +53,7 @@ export default function MonthlyCalendar() {
 
   return (
     <div>
-      <div
-        style={{
-          border: "1px solid #ddd",
-          padding: "16px",
-          marginBottom: "24px",
-          borderRadius: "12px",
-          backgroundColor: "#faf7f0",
-        }}
-      >
+      <div className="monthly-goal-card">
         <h3>Monthly Goal</h3>
         <p>150 km · 20 runs</p>
         <p>Victoria Marathon Base Phase</p>
@@ -53,14 +61,7 @@ export default function MonthlyCalendar() {
 
       <h2>June 2026</h2>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          marginBottom: "8px",
-          fontWeight: "bold",
-        }}
-      >
+      <div className="weekday-grid">
         <div>Sun</div>
         <div>Mon</div>
         <div>Tue</div>
@@ -70,13 +71,7 @@ export default function MonthlyCalendar() {
         <div>Sat</div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          gap: "8px",
-        }}
-      >
+      <div className="calendar-grid">
         {blankDays.map((_, index) => (
           <div key={`blank-${index}`}></div>
         ))}
@@ -85,29 +80,13 @@ export default function MonthlyCalendar() {
           const entry = getEntryForDay(day);
 
           return (
-            <div
+            <DayCell
               key={day}
+              day={day}
+              entry={entry}
+              today={today}
               onClick={() => setSelectedDay(day)}
-              style={{
-                border: "1px solid #ccc",
-                height: "100px",
-                padding: "8px",
-                cursor: "pointer",
-                backgroundColor: day === today ? "#faf7f0" : "white",
-              }}
-            >
-              <div>{day}</div>
-
-              {entry?.hasPlan && (
-                <div>
-                  🟡 {entry.planType} {entry.planDistance}km
-                </div>
-              )}
-
-              {entry?.hasResult && <div>🟢 Result</div>}
-
-              {entry?.reflection && <div>📝 Reflection</div>}
-            </div>
+            />
           );
         })}
       </div>

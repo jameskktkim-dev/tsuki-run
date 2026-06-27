@@ -1,0 +1,85 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(40, 40, 40, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-modal {
+  position: relative;
+  width: 420px;
+  background-color: white;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #d6d1c8;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.distance-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.distance-row input {
+  flex: 1;
+}
+
+.completed-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.save-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #2f3138;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #1f2025;
+}
