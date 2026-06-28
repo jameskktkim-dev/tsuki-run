@@ -1,5 +1,6 @@
 import MonthlyGoal from "./MonthlyGoal";
 import GoalModal from "./GoalModal";
+import ReflectionTimeline from "./ReflectionTimeline";
 import { useState, useEffect } from "react";
 import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
@@ -146,6 +147,8 @@ export default function MonthlyCalendar() {
           );
         })}
       </div>
+
+      <ReflectionTimeline entries={entries} />
 
       <DayModal
         selectedDay={selectedDay}
