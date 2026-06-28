@@ -6,11 +6,7 @@ import DayModal from "./DayModal";
 import DayCell from "./DayCell";
 import "./MonthlyCalendar.css";
 
-const days = Array.from({ length: 30 }, (_, index) => index + 1);
-const blankDays = Array.from({ length: 1 }, (_, index) => null);
-
 export default function MonthlyCalendar() {
-  
   const [entries, setEntries] = useState(() => {
     const savedEntries = localStorage.getItem("tsuki-run-entries");
 
@@ -22,6 +18,7 @@ export default function MonthlyCalendar() {
   });
 
   const [selectedDay, setSelectedDay] = useState(null);
+
   const [goal, setGoal] = useState(() => {
     const savedGoal = localStorage.getItem("tsuki-run-goal");
 
@@ -35,8 +32,10 @@ export default function MonthlyCalendar() {
       phase: "Victoria Marathon Base Phase",
     };
   });
+
   const [showGoalModal, setShowGoalModal] = useState(false);
-  
+  const [currentDate, setCurrentDate] = useState(new Date(2026, 5, 1));
+
   useEffect(() => {
     localStorage.setItem("tsuki-run-entries", JSON.stringify(entries));
   }, [entries]);
@@ -46,6 +45,37 @@ export default function MonthlyCalendar() {
   }, [goal]);
 
   const today = new Date().getDate();
+
+  const monthName = currentDate.toLocaleString("en-US", {
+    month: "long",
+  });
+
+  const year = currentDate.getFullYear();
+
+  const month = currentDate.getMonth();
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+  const days = Array.from({ length: daysInMonth }, (_, index) => index + 1);
+
+  const blankDays = Array.from(
+    { length: firstDayOfMonth },
+    (_, index) => null
+  );
+
+  const goToPreviousMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+    );
+  };
+
+  const goToNextMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+    );
+  };
 
   const getEntryForDay = (day) => {
     return entries.find((entry) => entry.day === day);
@@ -73,13 +103,19 @@ export default function MonthlyCalendar() {
 
   return (
     <div>
+      <MonthlyGoal
+        entries={entries}
+        goal={goal}
+        onEdit={() => setShowGoalModal(true)}
+      />
 
-    <MonthlyGoal
-      entries={entries}
-      goal={goal}
-      onEdit={() => setShowGoalModal(true)}
-    />
-      <h2>June 2026</h2>
+      <div className="month-header">
+        <button onClick={goToPreviousMonth}>‹</button>
+        <h2>
+          {monthName} {year}
+        </h2>
+        <button onClick={goToNextMonth}>›</button>
+      </div>
 
       <div className="weekday-grid">
         <div>Sun</div>
@@ -120,7 +156,12 @@ export default function MonthlyCalendar() {
 
       <GoalModal
         isOpen={showGoalModal}
+        goal={goal}
         onClose={() => setShowGoalModal(false)}
+        onSave={(updatedGoal) => {
+          setGoal(updatedGoal);
+          setShowGoalModal(false);
+        }}
       />
     </div>
   );

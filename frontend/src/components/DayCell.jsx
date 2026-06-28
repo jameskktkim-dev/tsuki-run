@@ -14,10 +14,10 @@ export default function DayCell({ day, entry, today, onClick }) {
         </div>
       )}
 
-      {entry?.result?.completed && <div className="entry-line">🟢 Result</div>}
-
-      {entry?.result?.reflection && (
-        <div className="entry-line">📝 Reflection</div>
+      {entry?.result?.type && (
+        <div className="entry-line">
+          🟢 {entry.result.type} {entry.result.distance}km
+        </div>
       )}
     </div>
   );

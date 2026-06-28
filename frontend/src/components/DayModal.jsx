@@ -6,18 +6,19 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
   const [planDistance, setPlanDistance] = useState("");
   const [planNote, setPlanNote] = useState("");
 
+  const [resultType, setResultType] = useState("");
   const [resultDistance, setResultDistance] = useState("");
   const [reflection, setReflection] = useState("");
-  const [completed, setCompleted] = useState(false);
+
 
   useEffect(() => {
     setPlanType(entry?.plan?.type || "");
     setPlanDistance(entry?.plan?.distance || "");
     setPlanNote(entry?.plan?.note || "");
 
+    setResultType(entry?.result?.type || "");
     setResultDistance(entry?.result?.distance || "");
     setReflection(entry?.result?.reflection || "");
-    setCompleted(entry?.result?.completed || false);
   }, [entry, selectedDay]);
 
   if (!selectedDay) return null;
@@ -31,9 +32,9 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
         note: planNote,
       },
       result: {
+        type: resultType,
         distance: resultDistance,
         reflection,
-        completed,
       },
     });
   };
@@ -91,6 +92,22 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
         <h3>Result</h3>
 
         <div className="form-group">
+          <label>Training Type</label>
+          <select
+            value={resultType}
+            onChange={(event) => setResultType(event.target.value)}
+          >
+            <option value="">Select training type</option>
+            <option value="Easy Run">Easy Run</option>
+            <option value="Long Run">Long Run</option>
+            <option value="Tempo">Tempo</option>
+            <option value="Intervals">Intervals</option>
+            <option value="Race">Race</option>
+            <option value="Rest">Rest</option>
+          </select>
+        </div>
+
+        <div className="form-group">
           <label>Actual Distance</label>
           <div className="distance-row">
             <input
@@ -112,15 +129,6 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
             placeholder="How did it feel?"
           />
         </div>
-
-        <label className="completed-row">
-          <input
-            type="checkbox"
-            checked={completed}
-            onChange={(event) => setCompleted(event.target.checked)}
-          />
-          Completed
-        </label>
 
         <button className="save-button" onClick={handleSave}>
           Save

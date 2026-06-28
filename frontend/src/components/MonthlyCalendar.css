@@ -1,16 +1,76 @@
 .monthly-goal-card {
-  border: 1px solid #ddd;
-  padding: 16px;
-  margin-bottom: 24px;
-  border-radius: 12px;
-  background-color: #faf7f0;
+  border: 1px solid #e2dacf;
+  padding: 24px;
+  margin-bottom: 32px;
+  border-radius: 18px;
+  background-color: #fffaf2;
+}
+
+.monthly-goal-card h3 {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8c8378;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.monthly-goal-card h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 400;
+}
+
+.monthly-goal-card p {
+  margin: 8px 0;
+  color: #5f5b55;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background: #ece7df;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 18px 0 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2f3138;
+  transition: width 0.3s ease;
+}
+
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.month-header button {
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  cursor: pointer;
+  color: #5f5b55;
+}
+
+.month-header h2 {
+  min-width: 190px;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .weekday-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 10px;
+  color: #8c8378;
+  font-size: 13px;
+  text-align: center;
 }
 
 .calendar-grid {
@@ -20,37 +80,32 @@
 }
 
 .day-cell {
-  border: 1px solid #ccc;
-  height: 100px;
-  padding: 8px;
+  min-height: 104px;
+  padding: 10px;
+  border: 1px solid #e1dbd2;
+  border-radius: 12px;
+  background-color: #fffdf8;
   cursor: pointer;
-  background-color: white;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.day-cell:hover {
+  background-color: #fff7ea;
+  transform: translateY(-1px);
 }
 
 .day-cell.today {
-  background-color: #faf7f0;
+  background-color: #f2eadf;
 }
 
 .day-number {
   margin-bottom: 8px;
+  font-size: 13px;
+  color: #5f5b55;
 }
 
 .entry-line {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: #ece7df;
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 14px 0;
-}
-
-.progress-fill {
-  height: 100%;
-  background: #444;
-  transition: width 0.3s ease;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #3f3d39;
 }
