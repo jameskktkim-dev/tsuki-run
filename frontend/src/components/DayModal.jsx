@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./DayModal.css";
 
+const MOODS = ["Calm", "Strong", "Tired", "Hard", "Rest"];
+
 export default function DayModal({ selectedDay, entry, onClose, onSave }) {
   const [planType, setPlanType] = useState("");
   const [planDistance, setPlanDistance] = useState("");
@@ -8,8 +10,8 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
 
   const [resultType, setResultType] = useState("");
   const [resultDistance, setResultDistance] = useState("");
+  const [mood, setMood] = useState("");
   const [reflection, setReflection] = useState("");
-
 
   useEffect(() => {
     setPlanType(entry?.plan?.type || "");
@@ -18,6 +20,7 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
 
     setResultType(entry?.result?.type || "");
     setResultDistance(entry?.result?.distance || "");
+    setMood(entry?.result?.mood || "");
     setReflection(entry?.result?.reflection || "");
   }, [entry, selectedDay]);
 
@@ -34,6 +37,7 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
       result: {
         type: resultType,
         distance: resultDistance,
+        mood,
         reflection,
       },
     });
@@ -121,12 +125,32 @@ export default function DayModal({ selectedDay, entry, onClose, onSave }) {
         </div>
 
         <div className="form-group">
+          <label>How did it feel?</label>
+          <div className="mood-options">
+            {MOODS.map((moodOption) => (
+              <button
+                key={moodOption}
+                type="button"
+                className={
+                  mood === moodOption
+                    ? "mood-button mood-button-selected"
+                    : "mood-button"
+                }
+                onClick={() => setMood(moodOption)}
+              >
+                {moodOption}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-group">
           <label>Reflection</label>
           <textarea
             rows="5"
             value={reflection}
             onChange={(event) => setReflection(event.target.value)}
-            placeholder="How did it feel?"
+            placeholder="A few quiet notes from today."
           />
         </div>
 

@@ -18,14 +18,13 @@
 
 ---
 
-## 📖 Sprint 2 - Reflection
+## 🌿 Sprint 2 - Reflection Experience
 
-- [ ] Better Reflection
 - [ ] Mood Tracking
+- [ ] Better Reflection
+- [ ] Reflection Timeline
 - [ ] Weekly View
 - [ ] Monthly Review
-- [ ] Reflection Timeline
-
 ---
 
 ## ☁️ Sprint 3 - Backend

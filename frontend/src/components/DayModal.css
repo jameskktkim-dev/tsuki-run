@@ -83,3 +83,25 @@
 .save-button:hover {
   background-color: #1f2025;
 }
+
+.mood-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mood-button {
+  border: 1px solid #ded8cf;
+  background: #faf8f3;
+  color: #4f4a43;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.mood-button-selected {
+  background: #4f4a43;
+  color: #fffaf2;
+  border-color: #4f4a43;
+}
