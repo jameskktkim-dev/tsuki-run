@@ -1,3 +1,4 @@
+// Reserved for a future sprint.
 import "./MonthlyReview.css";
 
 export default function MonthlyReview({ entries, goal }) {

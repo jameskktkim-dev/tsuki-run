@@ -1,3 +1,4 @@
+// Reserved for a future sprint.
 import "./WeeklyView.css";
 
 export default function WeeklyView({ entries }) {
