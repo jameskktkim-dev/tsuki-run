@@ -1,0 +1,30 @@
+.monthly-review {
+  margin-top: 48px;
+  padding: 32px;
+  border-radius: 20px;
+  background: #f4eee5;
+}
+
+.monthly-review-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #3f3a34;
+  margin-bottom: 24px;
+}
+
+.monthly-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.monthly-review-grid span {
+  font-size: 1.5rem;
+  color: #3f3a34;
+}
+
+.monthly-review-grid p {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: #8a8178;
+}

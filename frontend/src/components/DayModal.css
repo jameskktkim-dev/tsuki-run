@@ -10,7 +10,7 @@
 .day-modal {
   position: relative;
   width: 420px;
-  background-color: white;
+  background: #ffffff;
   padding: 28px;
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -24,32 +24,48 @@
   background: transparent;
   font-size: 24px;
   cursor: pointer;
+  color: #3f3a34;
 }
 
 .modal-title {
-  margin-top: 0;
-  margin-bottom: 24px;
+  margin: 0 0 28px;
   text-align: center;
 }
 
+h3 {
+  margin: 28px 0 18px;
+  font-size: 1.1rem;
+  color: #3f3a34;
+}
+
 .form-group {
-  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 18px;
 }
 
 .form-group label {
   font-weight: 600;
+  color: #3f3a34;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
   border: 1px solid #d6d1c8;
   border-radius: 8px;
+  background: #fffdf8;
+  font-family: inherit;
   font-size: 14px;
+  color: #3f3a34;
+}
+
+.form-group textarea {
+  resize: vertical;
 }
 
 .distance-row {
@@ -62,46 +78,69 @@
   flex: 1;
 }
 
-.completed-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 22px;
+.distance-row span {
+  color: #6d655d;
+  font-size: 0.9rem;
+}
+
+.reflection-prompt-section {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #e8dfd3;
+}
+
+.reflection-prompt-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9a9187;
+}
+
+.reflection-prompt-text {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #3f3a34;
+}
+
+.reflection-prompt-section textarea {
+  min-height: 120px;
+}
+
+.reflection-prompt-section textarea::placeholder {
+  color: #9a9187;
 }
 
 .save-button {
   width: 100%;
+  margin-top: 24px;
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background-color: #2f3138;
+  background: #2f3138;
   color: white;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .save-button:hover {
-  background-color: #1f2025;
+  background: #1f2025;
 }
 
-.mood-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.mood-button {
-  border: 1px solid #ded8cf;
-  background: #faf8f3;
-  color: #4f4a43;
-  border-radius: 999px;
-  padding: 7px 12px;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.mood-button-selected {
-  background: #4f4a43;
-  color: #fffaf2;
-  border-color: #4f4a43;
+.reflection-prompt-section textarea {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #d6d1c8;
+  border-radius: 8px;
+  background: #fffdf8;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #3f3a34;
+  resize: vertical;
 }
