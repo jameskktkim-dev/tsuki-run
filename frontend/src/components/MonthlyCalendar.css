@@ -1,111 +1,166 @@
-.monthly-goal-card {
-  border: 1px solid #e2dacf;
-  padding: 24px;
-  margin-bottom: 32px;
-  border-radius: 18px;
-  background-color: #fffaf2;
+.monthly-goal {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  column-gap: 48px;
+  max-width: 620px;
+  margin-bottom: 72px;
 }
 
-.monthly-goal-card h3 {
-  margin: 0 0 14px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #8c8378;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.monthly-goal-header {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  grid-column: 1 / -1;
+  margin-bottom: 24px;
 }
 
-.monthly-goal-card h2 {
+.monthly-goal-label {
   margin: 0;
-  font-size: 34px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2f2b28;
 }
 
-.monthly-goal-card p {
-  margin: 8px 0;
-  color: #5f5b55;
+.monthly-goal-edit {
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #2f2b28;
+  background: transparent;
+  color: #2f2b28;
+  font-size: 13px;
+  font-weight: 300;
+}
+.monthly-goal-distance {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 5px;
-  background: #ece7df;
-  border-radius: 999px;
-  overflow: hidden;
-  margin: 18px 0 10px;
+.monthly-goal-distance span {
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
-.progress-fill {
-  height: 100%;
-  background: #2f3138;
-  transition: width 0.3s ease;
+.monthly-goal-distance small {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.monthly-goal-details {
+  align-self: end;
+}
+
+.monthly-goal-details p {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #2f2b28;
 }
 
 .month-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  margin-bottom: 20px;
+  gap: 42px;
+  margin-bottom: 32px;
 }
 
 .month-header button {
   border: none;
   background: transparent;
-  font-size: 30px;
-  cursor: pointer;
-  color: #5f5b55;
+  font-size: 28px;
+  font-weight: 300;
+  color: #2f2b28;
 }
 
 .month-header h2 {
-  min-width: 190px;
+  min-width: 220px;
+  margin: 0;
   text-align: center;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: -0.03em;
 }
 
 .weekday-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 10px;
-  color: #8c8378;
-  font-size: 13px;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(47, 43, 40, 0.2);
+  color: #2f2b28;
+  font-size: 14px;
+  font-weight: 300;
   text-align: center;
+}
+
+.weekday-grid div {
+  padding-bottom: 16px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 0;
+}
+
+.calendar-grid > div {
+  border-right: 1px dotted rgba(47, 43, 40, 0.25);
+  border-bottom: 1px dotted rgba(47, 43, 40, 0.25);
+}
+
+.calendar-grid > div:nth-child(7n) {
+  border-right: none;
 }
 
 .day-cell {
-  min-height: 104px;
-  padding: 10px;
-  border: 1px solid #e1dbd2;
-  border-radius: 12px;
-  background-color: #fffdf8;
+  min-height: 132px;
+  padding: 16px 18px;
+  background: transparent;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .day-cell:hover {
-  background-color: #fff7ea;
-  transform: translateY(-1px);
+  background-color: rgba(47, 43, 40, 0.025);
 }
 
 .day-cell.today {
-  background-color: #f2eadf;
+  background-color: rgba(204, 185, 157, 0.18);
 }
 
 .day-number {
-  margin-bottom: 8px;
-  font-size: 13px;
-  color: #5f5b55;
+  margin-bottom: 18px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #2f2b28;
 }
 
 .entry-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
   font-size: 12px;
   line-height: 1.5;
-  color: #3f3d39;
+  font-weight: 300;
+  color: #2f2b28;
+}
+
+.entry-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  flex-shrink: 0;
+  font-size: 13px;
+  line-height: 1;
+  color: #2f2b28;
+}
+
+.entry-marker.completed {
+  color: #000;
 }

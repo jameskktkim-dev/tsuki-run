@@ -10,13 +10,15 @@ export default function DayCell({ day, entry, today, onClick }) {
 
       {entry?.plan?.type && (
         <div className="entry-line">
-          🟡 {entry.plan.type} {entry.plan.distance}km
+          <span className="entry-marker">○</span>
+          {entry.plan.type} {entry.plan.distance} km
         </div>
       )}
 
       {entry?.result?.type && (
         <div className="entry-line">
-          🟢 {entry.result.type} {entry.result.distance}km
+          <span className="entry-marker completed">●</span>
+          {entry.result.type} {entry.result.distance} km
         </div>
       )}
     </div>
