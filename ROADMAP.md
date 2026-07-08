@@ -29,11 +29,11 @@
 
 ## 🎨 Sprint 2.5 - Design Foundation
 
-- [ ] Brand Identity
-- [ ] Logo System
-- [ ] Typography System
-- [ ] Spacing System
-- [ ] Color Palette
+- [x] Brand Identity
+- [x] Logo System
+- [x] Typography System
+- [x] Spacing System
+- [x] Color Palette
 - [ ] Calendar Polish
 - [ ] Journal Polish
 - [ ] Modal Polish

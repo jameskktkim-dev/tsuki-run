@@ -1,0 +1,25 @@
+:root {
+  /* ===== Spacing ===== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 96px;
+
+  /* ===== Colors ===== */
+  --paper: #f7f3ec;
+
+  --ink: #1f1c1a;
+  --ink-soft: rgba(47, 43, 40, 0.9);
+  --ink-muted: rgba(47, 43, 40, 0.72);
+  --ink-light: rgba(47, 43, 40, 0.58);
+  --ink-faint: rgba(47, 43, 40, 0.48);
+
+  --line: rgba(47, 43, 40, 0.12);
+  --line-soft: rgba(47, 43, 40, 0.1);
+  --line-strong: rgba(47, 43, 40, 0.32);
+
+  --today: rgba(204, 185, 157, 0.14);
+}

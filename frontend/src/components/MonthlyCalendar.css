@@ -1,9 +1,9 @@
 .monthly-goal {
   display: grid;
   grid-template-columns: 220px 1fr;
-  column-gap: 48px;
+  column-gap: var(--space-5);
   max-width: 620px;
-  margin-bottom: 72px;
+  margin-bottom: var(--space-6);
 }
 
 .monthly-goal-header {
@@ -11,43 +11,53 @@
   align-items: baseline;
   gap: 32px;
   grid-column: 1 / -1;
-  margin-bottom: 24px;
+  margin-bottom: var(--space-4);
 }
 
 .monthly-goal-label {
   margin: 0;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 300;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #2f2b28;
+  color: rgba(47, 43, 40, 0.74);
 }
 
 .monthly-goal-edit {
   padding: 0;
   border: none;
-  border-bottom: 1px solid #2f2b28;
   background: transparent;
-  color: #2f2b28;
-  font-size: 13px;
+  color: rgba(47, 43, 40, 0.58);
+  font-size: 11px;
   font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease;
 }
+
+.monthly-goal-edit:hover {
+  color: rgba(47, 43, 40, 0.9);
+}
+
 .monthly-goal-distance {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .monthly-goal-distance span {
-  font-size: 56px;
+  font-size: 62px;
   font-weight: 300;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.055em;
+  color: #1f1c1a;
 }
 
 .monthly-goal-distance small {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
+  color: rgba(47, 43, 40, 0.82);
 }
 
 .monthly-goal-details {
@@ -55,50 +65,61 @@
 }
 
 .monthly-goal-details p {
-  margin: 0 0 8px;
-  font-size: 15px;
+  margin: 0 0 var(--space-2);
+  font-size: 13px;
+  line-height: 1.5;
   font-weight: 300;
-  color: #2f2b28;
+  color: rgba(47, 43, 40, 0.68);
 }
 
 .month-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 42px;
-  margin-bottom: 32px;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
 }
 
 .month-header button {
+  width: 28px;
   border: none;
   background: transparent;
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 300;
+  color: rgba(47, 43, 40, 0.34);
+}
+
+.month-header button:hover {
   color: #2f2b28;
 }
 
 .month-header h2 {
-  min-width: 220px;
+  min-width: 240px;
   margin: 0;
   text-align: center;
-  font-size: 28px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36px;
   font-weight: 300;
-  letter-spacing: -0.03em;
+  font-style: italic;
+  letter-spacing: -0.045em;
+  color: #1f1c1a;
 }
 
 .weekday-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   margin-bottom: 0;
-  border-bottom: 1px solid rgba(47, 43, 40, 0.2);
-  color: #2f2b28;
-  font-size: 14px;
+  border-bottom: 1px solid rgba(47, 43, 40, 0.12);
+  color: rgba(47, 43, 40, 0.48);
+  font-size: 10px;
   font-weight: 300;
+  letter-spacing: 0.16em;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .weekday-grid div {
-  padding-bottom: 16px;
+  padding-bottom: var(--space-3);
 }
 
 .calendar-grid {
@@ -108,8 +129,8 @@
 }
 
 .calendar-grid > div {
-  border-right: 1px dotted rgba(47, 43, 40, 0.25);
-  border-bottom: 1px dotted rgba(47, 43, 40, 0.25);
+  border-right: 1px dotted rgba(47, 43, 40, 0.1);
+  border-bottom: 1px dotted rgba(47, 43, 40, 0.1);
 }
 
 .calendar-grid > div:nth-child(7n) {
@@ -118,36 +139,37 @@
 
 .day-cell {
   min-height: 132px;
-  padding: 16px 18px;
+  padding: var(--space-3);
   background: transparent;
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
 
 .day-cell:hover {
-  background-color: rgba(47, 43, 40, 0.025);
+  background-color: rgba(47, 43, 40, 0.022);
 }
 
 .day-cell.today {
-  background-color: rgba(204, 185, 157, 0.18);
+  background-color: rgba(204, 185, 157, 0.14);
 }
 
 .day-number {
-  margin-bottom: 18px;
-  font-size: 15px;
-  font-weight: 300;
-  color: #2f2b28;
+  margin-bottom: var(--space-3);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(47, 43, 40, 0.82);
 }
 
 .entry-line {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 12px;
-  line-height: 1.5;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: 11.5px;
+  line-height: 1.55;
   font-weight: 300;
-  color: #2f2b28;
+  color: rgba(47, 43, 40, 0.9);
 }
 
 .entry-marker {
@@ -156,7 +178,7 @@
   justify-content: center;
   width: 10px;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1;
   color: #2f2b28;
 }
