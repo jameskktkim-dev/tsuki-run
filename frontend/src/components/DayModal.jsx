@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./DayModal.css";
 import { reflectionPrompts } from "../data/reflectionPrompts";
 
@@ -48,8 +48,10 @@ export default function DayModal({
     <div className="modal-backdrop">
       <div className="day-modal">
         <button
+          type="button"
           className="modal-close-button"
           onClick={onClose}
+          aria-label="Close day entry"
         >
           ×
         </button>
@@ -59,9 +61,10 @@ export default function DayModal({
         <h3>Plan</h3>
 
         <div className="form-group">
-          <label>Training Type</label>
+          <label htmlFor="plan-type">Training Type</label>
 
           <select
+            id="plan-type"
             value={planType}
             onChange={(e) => setPlanType(e.target.value)}
           >
@@ -76,11 +79,14 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label>Planned Distance</label>
+          <label htmlFor="plan-distance">Planned Distance</label>
 
           <div className="distance-row">
             <input
+              id="plan-distance"
               type="number"
+              min="0"
+              step="0.1"
               value={planDistance}
               onChange={(e) => setPlanDistance(e.target.value)}
               placeholder="0"
@@ -90,12 +96,13 @@ export default function DayModal({
           </div>
         </div>
 
-        <h3>Completed Run</h3>
+        <h3>Result</h3>
 
         <div className="form-group">
-          <label>Training Type</label>
+          <label htmlFor="result-type">Training Type</label>
 
           <select
+            id="result-type"
             value={resultType}
             onChange={(e) => setResultType(e.target.value)}
           >
@@ -110,11 +117,14 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label>Actual Distance</label>
+          <label htmlFor="result-distance">Actual Distance</label>
 
           <div className="distance-row">
             <input
+              id="result-distance"
               type="number"
+              min="0"
+              step="0.1"
               value={resultDistance}
               onChange={(e) => setResultDistance(e.target.value)}
               placeholder="0"
@@ -136,15 +146,17 @@ export default function DayModal({
           <textarea
             value={reflection}
             onChange={(e) => setReflection(e.target.value)}
-            placeholder="Write a few quiet notes..."
+            placeholder="Write a quiet note..."
+            aria-label="Reflection"
           />
         </div>
 
         <button
+          type="button"
           className="save-button"
           onClick={handleSave}
         >
-          Save
+          Save Entry
         </button>
       </div>
     </div>

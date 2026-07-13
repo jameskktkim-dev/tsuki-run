@@ -1,57 +1,103 @@
 .reflection-timeline {
-  margin-top: 48px;
-  padding-top: 32px;
-  border-top: 1px solid #e1d8cc;
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line-strong);
 }
 
 .reflection-title {
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-bottom: 28px;
-  color: #3f3a34;
+  margin: 0 0 var(--space-5);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
 .reflection-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
 .reflection-item {
   display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid #eadfd2;
+  grid-template-columns: 72px minmax(0, 1fr);
+  column-gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .reflection-date {
-  color: #8a8178;
-  line-height: 1.2;
+  align-self: start;
+  line-height: 1;
+  color: var(--ink-light);
 }
 
 .reflection-date span {
   display: block;
-  font-size: 0.7rem;
+  margin-bottom: var(--space-1);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .reflection-date strong {
   display: block;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: #3f3a34;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.reflection-content {
+  min-width: 0;
+  padding-top: 2px;
 }
 
 .reflection-meta {
-  font-size: 0.75rem;
-  color: #9a9187;
-  margin-bottom: 8px;
+    margin-bottom: var(--space-2);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
 }
 
 .reflection-text {
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: #3f3a34;
-  margin: 0;
-  white-space: pre-wrap;
+    max-width: 680px;
+    margin: 0;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.reflection-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--ink-light);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.reflection-toggle:hover {
+  color: var(--ink);
+}
+
+.reflection-toggle:focus-visible {
+  outline: 1px solid var(--ink-muted);
+  outline-offset: 6px;
 }

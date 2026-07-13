@@ -1,43 +1,27 @@
 .monthly-goal {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  column-gap: var(--space-5);
-  max-width: 620px;
-  margin-bottom: var(--space-6);
+  width: min(390px, 100%);
+  margin: -174px 0 72px auto;
+  padding: 0;
 }
 
 .monthly-goal-header {
-  display: flex;
-  align-items: baseline;
-  gap: 32px;
-  grid-column: 1 / -1;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .monthly-goal-label {
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(47, 43, 40, 0.74);
+  color: var(--ink-muted);
 }
 
-.monthly-goal-edit {
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: rgba(47, 43, 40, 0.58);
-  font-size: 11px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.15s ease;
-}
-
-.monthly-goal-edit:hover {
-  color: rgba(47, 43, 40, 0.9);
+.monthly-goal-summary {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
 .monthly-goal-distance {
@@ -47,62 +31,148 @@
 }
 
 .monthly-goal-distance span {
-  font-size: 62px;
+  font-size: 52px;
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.055em;
-  color: #1f1c1a;
+  color: var(--ink);
 }
 
 .monthly-goal-distance small {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 300;
-  color: rgba(47, 43, 40, 0.82);
+  color: var(--ink-light);
 }
 
-.monthly-goal-details {
-  align-self: end;
+.monthly-goal-progress-value {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: 5px;
 }
 
-.monthly-goal-details p {
-  margin: 0 0 var(--space-2);
-  font-size: 13px;
+.monthly-goal-progress-value strong {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.monthly-goal-progress-value span {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.monthly-goal-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--ink-light);
+}
+
+.monthly-goal-progress-track {
+  position: relative;
+  width: 100%;
+  height: 7px;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(47, 43, 40, 0.08);
+}
+
+.monthly-goal-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(188, 229, 173, 0.82);
+  transition: width 0.3s ease;
+}
+
+.monthly-goal-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.monthly-goal-phase {
+  margin: 0;
+  font-size: 11px;
   line-height: 1.5;
   font-weight: 300;
-  color: rgba(47, 43, 40, 0.68);
+  color: var(--ink-muted);
+}
+
+.monthly-goal-edit {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.monthly-goal-edit:hover {
+  color: var(--ink);
 }
 
 .month-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 28px minmax(220px, auto) 28px;
   align-items: center;
   justify-content: center;
-  gap: var(--space-5);
+  column-gap: var(--space-4);
   margin-bottom: var(--space-5);
 }
 
 .month-header button {
   width: 28px;
+  height: 28px;
+  padding: 0;
   border: none;
   background: transparent;
-  font-size: 20px;
+  display: grid;
+  place-items: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
   font-weight: 300;
-  color: rgba(47, 43, 40, 0.34);
+  line-height: 1;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .month-header button:hover {
-  color: #2f2b28;
+  color: var(--ink);
+  transform: translateY(-1px);
 }
 
 .month-header h2 {
-  min-width: 240px;
+  min-width: 220px;
   margin: 0;
   text-align: center;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 36px;
   font-weight: 300;
   font-style: italic;
+  line-height: 1;
   letter-spacing: -0.045em;
-  color: #1f1c1a;
+  color: var(--ink);
 }
 
 .weekday-grid {
@@ -129,8 +199,8 @@
 }
 
 .calendar-grid > div {
-  border-right: 1px dotted rgba(47, 43, 40, 0.1);
-  border-bottom: 1px dotted rgba(47, 43, 40, 0.1);
+  border-right: 1px solid rgba(47, 43, 40, 0.075);
+  border-bottom: 1px solid rgba(47, 43, 40, 0.075);
 }
 
 .calendar-grid > div:nth-child(7n) {
@@ -139,14 +209,24 @@
 
 .day-cell {
   min-height: 132px;
-  padding: var(--space-3);
+  padding: 18px 16px 16px;
   background: transparent;
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
 
+
 .day-cell:hover {
   background-color: rgba(47, 43, 40, 0.022);
+}
+
+
+.day-cell.past {
+  background-color: rgba(47, 43, 40, 0.018);
+}
+
+.day-cell.past:hover {
+  background-color: rgba(47, 43, 40, 0.032);
 }
 
 .day-cell.today {
@@ -154,7 +234,7 @@
 }
 
 .day-number {
-  margin-bottom: var(--space-3);
+  margin-bottom: 12px;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -172,6 +252,10 @@
   color: rgba(47, 43, 40, 0.9);
 }
 
+.plan-entry {
+  color: rgba(47, 43, 40, 0.72);
+}
+
 .entry-marker {
   display: inline-flex;
   align-items: center;
@@ -180,9 +264,42 @@
   flex-shrink: 0;
   font-size: 12px;
   line-height: 1;
-  color: #2f2b28;
+  color: var(--ink-light);
 }
 
 .entry-marker.completed {
-  color: #000;
+  color: var(--ink);
+}
+
+.completed-entry-text {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  padding: 0 3px;
+}
+
+.completed-entry-text::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  left: -2px;
+  right: -3px;
+  bottom: 1px;
+
+  height: 66%;
+
+  border-radius: 2px;
+
+  background: rgba(188, 229, 173, 0.62);
+
+  transform: rotate(-0.5deg);
+}
+
+.completed-entry {
+  color: rgba(33, 47, 35, 0.96);
+}
+
+.placeholder-entry {
+  visibility: hidden;
 }

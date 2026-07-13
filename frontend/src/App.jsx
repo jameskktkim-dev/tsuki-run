@@ -7,7 +7,6 @@ export default function App() {
     <main className="app-shell">
       <header className="app-header">
         <img src={tsukiLogo} alt="Tsuki Run" className="app-logo" />
-        <p className="app-eyebrow">A mindful running planner</p>
       </header>
 
       <MonthlyCalendar />

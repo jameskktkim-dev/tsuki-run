@@ -1,7 +1,7 @@
 import MonthlyGoal from "./MonthlyGoal";
 import GoalModal from "./GoalModal";
 import ReflectionTimeline from "./ReflectionTimeline";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
 import DayCell from "./DayCell";
@@ -35,31 +35,50 @@ export default function MonthlyCalendar() {
   });
 
   const [showGoalModal, setShowGoalModal] = useState(false);
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 5, 1));
+  const [currentDate, setCurrentDate] = useState(
+    new Date(2026, 5, 1)
+  );
 
   useEffect(() => {
-    localStorage.setItem("tsuki-run-entries", JSON.stringify(entries));
+    localStorage.setItem(
+      "tsuki-run-entries",
+      JSON.stringify(entries)
+    );
   }, [entries]);
 
   useEffect(() => {
-    localStorage.setItem("tsuki-run-goal", JSON.stringify(goal));
+    localStorage.setItem(
+      "tsuki-run-goal",
+      JSON.stringify(goal)
+    );
   }, [goal]);
 
-  const today = new Date().getDate();
+  const actualToday = new Date();
+  actualToday.setHours(0, 0, 0, 0);
 
   const monthName = currentDate.toLocaleString("en-US", {
     month: "long",
   });
 
   const year = currentDate.getFullYear();
-
   const month = currentDate.getMonth();
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInMonth = new Date(
+    year,
+    month + 1,
+    0
+  ).getDate();
 
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
+  const firstDayOfMonth = new Date(
+    year,
+    month,
+    1
+  ).getDay();
 
-  const days = Array.from({ length: daysInMonth }, (_, index) => index + 1);
+  const days = Array.from(
+    { length: daysInMonth },
+    (_, index) => index + 1
+  );
 
   const blankDays = Array.from(
     { length: firstDayOfMonth },
@@ -68,21 +87,35 @@ export default function MonthlyCalendar() {
 
   const goToPreviousMonth = () => {
     setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+      new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 1,
+        1
+      )
     );
+
+    setSelectedDay(null);
   };
 
   const goToNextMonth = () => {
     setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+      new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        1
+      )
     );
+
+    setSelectedDay(null);
   };
 
   const getEntryForDay = (day) => {
     return entries.find((entry) => entry.day === day);
   };
 
-  const selectedEntry = selectedDay ? getEntryForDay(selectedDay) : null;
+  const selectedEntry = selectedDay
+    ? getEntryForDay(selectedDay)
+    : null;
 
   const handleSaveEntry = (updatedEntry) => {
     const existingEntry = entries.find(
@@ -92,7 +125,9 @@ export default function MonthlyCalendar() {
     if (existingEntry) {
       setEntries(
         entries.map((entry) =>
-          entry.day === updatedEntry.day ? updatedEntry : entry
+          entry.day === updatedEntry.day
+            ? updatedEntry
+            : entry
         )
       );
     } else {
@@ -111,11 +146,25 @@ export default function MonthlyCalendar() {
       />
 
       <div className="month-header">
-        <button onClick={goToPreviousMonth}>‹</button>
+        <button
+          type="button"
+          onClick={goToPreviousMonth}
+          aria-label="Previous month"
+        >
+          ‹
+        </button>
+
         <h2>
           {monthName} {year}
         </h2>
-        <button onClick={goToNextMonth}>›</button>
+
+        <button
+          type="button"
+          onClick={goToNextMonth}
+          aria-label="Next month"
+        >
+          ›
+        </button>
       </div>
 
       <div className="weekday-grid">
@@ -136,12 +185,21 @@ export default function MonthlyCalendar() {
         {days.map((day) => {
           const entry = getEntryForDay(day);
 
+          const cellDate = new Date(year, month, day);
+          cellDate.setHours(0, 0, 0, 0);
+
+          const isToday =
+            cellDate.getTime() === actualToday.getTime();
+
+          const isPast = cellDate < actualToday;
+
           return (
             <DayCell
               key={day}
               day={day}
               entry={entry}
-              today={today}
+              isToday={isToday}
+              isPast={isPast}
               onClick={() => setSelectedDay(day)}
             />
           );
