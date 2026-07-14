@@ -9,15 +9,30 @@ import DayCell from "./DayCell";
 
 import "./MonthlyCalendar.css";
 
+const LEGACY_MONTH_KEY = "2026-06";
+
 export default function MonthlyCalendar() {
-  const [entries, setEntries] = useState(() => {
+  const [entriesByMonth, setEntriesByMonth] = useState(() => {
     const savedEntries = localStorage.getItem("tsuki-run-entries");
 
-    if (savedEntries) {
-      return JSON.parse(savedEntries);
+    if (!savedEntries) {
+      return initialEntries;
     }
 
-    return initialEntries;
+    try {
+      const parsedEntries = JSON.parse(savedEntries);
+
+      // 기존 배열 구조를 2026-06 데이터로 자동 이전
+      if (Array.isArray(parsedEntries)) {
+        return {
+          [LEGACY_MONTH_KEY]: parsedEntries,
+        };
+      }
+
+      return parsedEntries;
+    } catch {
+      return initialEntries;
+    }
   });
 
   const [selectedDay, setSelectedDay] = useState(null);
@@ -38,16 +53,22 @@ export default function MonthlyCalendar() {
 
   const [showGoalModal, setShowGoalModal] = useState(false);
 
-  const [currentDate, setCurrentDate] = useState(
-    new Date(2026, 5, 1)
-  );
+  const [currentDate, setCurrentDate] = useState(() => {
+    const today = new Date();
+
+    return new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    );
+  });
 
   useEffect(() => {
     localStorage.setItem(
       "tsuki-run-entries",
-      JSON.stringify(entries)
+      JSON.stringify(entriesByMonth)
     );
-  }, [entries]);
+  }, [entriesByMonth]);
 
   useEffect(() => {
     localStorage.setItem(
@@ -65,6 +86,10 @@ export default function MonthlyCalendar() {
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
+
+  const monthKey = `${year}-${String(month + 1).padStart(2, "0")}`;
+
+  const monthEntries = entriesByMonth[monthKey] || [];
 
   const daysInMonth = new Date(
     year,
@@ -113,7 +138,7 @@ export default function MonthlyCalendar() {
   };
 
   const getEntryForDay = (day) => {
-    return entries.find((entry) => entry.day === day);
+    return monthEntries.find((entry) => entry.day === day);
   };
 
   const selectedEntry = selectedDay
@@ -121,21 +146,27 @@ export default function MonthlyCalendar() {
     : null;
 
   const handleSaveEntry = (updatedEntry) => {
-    const existingEntry = entries.find(
-      (entry) => entry.day === updatedEntry.day
-    );
+    setEntriesByMonth((currentEntriesByMonth) => {
+      const currentMonthEntries =
+        currentEntriesByMonth[monthKey] || [];
 
-    if (existingEntry) {
-      setEntries(
-        entries.map((entry) =>
-          entry.day === updatedEntry.day
-            ? updatedEntry
-            : entry
-        )
+      const existingEntry = currentMonthEntries.find(
+        (entry) => entry.day === updatedEntry.day
       );
-    } else {
-      setEntries([...entries, updatedEntry]);
-    }
+
+      const updatedMonthEntries = existingEntry
+        ? currentMonthEntries.map((entry) =>
+            entry.day === updatedEntry.day
+              ? updatedEntry
+              : entry
+          )
+        : [...currentMonthEntries, updatedEntry];
+
+      return {
+        ...currentEntriesByMonth,
+        [monthKey]: updatedMonthEntries,
+      };
+    });
 
     setSelectedDay(null);
   };
@@ -143,7 +174,7 @@ export default function MonthlyCalendar() {
   return (
     <div>
       <MonthlyGoal
-        entries={entries}
+        entries={monthEntries}
         goal={goal}
         onEdit={() => setShowGoalModal(true)}
       />
@@ -213,10 +244,12 @@ export default function MonthlyCalendar() {
         </div>
       </div>
 
-      <ReflectionTimeline entries={entries} />
+      <ReflectionTimeline entries={monthEntries} />
 
       <DayModal
         selectedDay={selectedDay}
+        monthName={monthName}
+        year={year}
         entry={selectedEntry}
         onClose={() => setSelectedDay(null)}
         onSave={handleSaveEntry}

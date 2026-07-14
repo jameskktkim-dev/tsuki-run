@@ -4,6 +4,8 @@ import { reflectionPrompts } from "../data/reflectionPrompts";
 
 export default function DayModal({
   selectedDay,
+  monthName,
+  year,
   entry,
   onClose,
   onSave,
@@ -56,7 +58,9 @@ export default function DayModal({
           ×
         </button>
 
-        <h2 className="modal-title">June {selectedDay}</h2>
+        <h2 className="modal-title">
+          {monthName} {selectedDay}, {year}
+        </h2>
 
         <h3>Plan</h3>
 
@@ -66,7 +70,9 @@ export default function DayModal({
           <select
             id="plan-type"
             value={planType}
-            onChange={(e) => setPlanType(e.target.value)}
+            onChange={(event) =>
+              setPlanType(event.target.value)
+            }
           >
             <option value="">Select training type</option>
             <option value="Easy Run">Easy Run</option>
@@ -79,7 +85,9 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label htmlFor="plan-distance">Planned Distance</label>
+          <label htmlFor="plan-distance">
+            Planned Distance
+          </label>
 
           <div className="distance-row">
             <input
@@ -88,7 +96,9 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={planDistance}
-              onChange={(e) => setPlanDistance(e.target.value)}
+              onChange={(event) =>
+                setPlanDistance(event.target.value)
+              }
               placeholder="0"
             />
 
@@ -99,12 +109,16 @@ export default function DayModal({
         <h3>Result</h3>
 
         <div className="form-group">
-          <label htmlFor="result-type">Training Type</label>
+          <label htmlFor="result-type">
+            Training Type
+          </label>
 
           <select
             id="result-type"
             value={resultType}
-            onChange={(e) => setResultType(e.target.value)}
+            onChange={(event) =>
+              setResultType(event.target.value)
+            }
           >
             <option value="">Select training type</option>
             <option value="Easy Run">Easy Run</option>
@@ -117,7 +131,9 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label htmlFor="result-distance">Actual Distance</label>
+          <label htmlFor="result-distance">
+            Actual Distance
+          </label>
 
           <div className="distance-row">
             <input
@@ -126,7 +142,9 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={resultDistance}
-              onChange={(e) => setResultDistance(e.target.value)}
+              onChange={(event) =>
+                setResultDistance(event.target.value)
+              }
               placeholder="0"
             />
 
@@ -145,7 +163,9 @@ export default function DayModal({
 
           <textarea
             value={reflection}
-            onChange={(e) => setReflection(e.target.value)}
+            onChange={(event) =>
+              setReflection(event.target.value)
+            }
             placeholder="Write a quiet note..."
             aria-label="Reflection"
           />

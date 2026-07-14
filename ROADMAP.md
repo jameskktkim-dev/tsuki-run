@@ -42,6 +42,31 @@
 
 ---
 
+## 📓 Sprint 2.7 - Planner Experience
+
+### Month-specific Data
+
+- [ ] Month-specific Entries
+- [ ] Month-specific Goals
+- [ ] Month-specific Reflections
+- [ ] Local Storage Data Migration
+
+### Planner Improvements
+
+- [ ] Planned vs Completed Summary
+- [ ] Weekly Mileage
+- [ ] Long Run Counter
+- [ ] Monthly Completion State
+
+### Monthly Review
+
+- [ ] Monthly Summary
+- [ ] Longest Run
+- [ ] Most Frequent Run Type
+- [ ] End-of-month Reflection
+
+---
+
 ## ☁️ Sprint 3 - Backend
 
 - [ ] Django API
