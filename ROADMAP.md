@@ -34,11 +34,11 @@
 - [x] Typography System
 - [x] Spacing System
 - [x] Color Palette
-- [ ] Calendar Polish
-- [ ] Journal Polish
-- [ ] Modal Polish
-- [ ] Opening Screen
-- [ ] Mobile Responsive Design
+- [x] Calendar Polish
+- [x] Journal Polish
+- [x] Modal Polish
+- [x] Opening Screen
+- [x] Mobile Responsive Design
 
 ---
 

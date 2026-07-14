@@ -165,13 +165,16 @@
 .month-header h2 {
   min-width: 220px;
   margin: 0;
+
   text-align: center;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 36px;
+
+  font-family: inherit;
+  font-size: 24px;
   font-weight: 300;
-  font-style: italic;
-  line-height: 1;
-  letter-spacing: -0.045em;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
   color: var(--ink);
 }
 
@@ -302,4 +305,62 @@
 
 .placeholder-entry {
   visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .monthly-goal {
+    width: 100%;
+    margin: var(--space-5) 0 var(--space-6);
+  }
+
+  .monthly-goal-summary {
+    align-items: flex-end;
+  }
+
+  .monthly-goal-distance span {
+    font-size: 44px;
+  }
+
+  .monthly-goal-progress-meta {
+    gap: var(--space-2);
+  }
+
+  .monthly-goal-footer {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 1050px) {
+  .monthly-goal {
+    width: 100%;
+    margin: var(--space-5) 0 var(--space-6);
+  }
+}
+
+.calendar-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calendar-inner {
+  min-width: 980px;
+}
+
+@media (max-width: 768px) {
+  .calendar-inner {
+    min-width: 860px;
+  }
+
+  .month-header h2 {
+    min-width: 180px;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+  }
+
+  .month-header {
+    grid-template-columns: 24px minmax(180px, auto) 24px;
+    column-gap: var(--space-3);
+  }
 }

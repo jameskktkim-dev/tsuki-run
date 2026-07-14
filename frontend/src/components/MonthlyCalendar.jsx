@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
+import { entries as initialEntries } from "../data/mockEntries";
+
 import MonthlyGoal from "./MonthlyGoal";
 import GoalModal from "./GoalModal";
 import ReflectionTimeline from "./ReflectionTimeline";
-import { useEffect, useState } from "react";
-import { entries as initialEntries } from "../data/mockEntries";
 import DayModal from "./DayModal";
 import DayCell from "./DayCell";
+
 import "./MonthlyCalendar.css";
 
 export default function MonthlyCalendar() {
@@ -35,6 +37,7 @@ export default function MonthlyCalendar() {
   });
 
   const [showGoalModal, setShowGoalModal] = useState(false);
+
   const [currentDate, setCurrentDate] = useState(
     new Date(2026, 5, 1)
   );
@@ -82,7 +85,7 @@ export default function MonthlyCalendar() {
 
   const blankDays = Array.from(
     { length: firstDayOfMonth },
-    (_, index) => null
+    () => null
   );
 
   const goToPreviousMonth = () => {
@@ -167,43 +170,47 @@ export default function MonthlyCalendar() {
         </button>
       </div>
 
-      <div className="weekday-grid">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-      </div>
+      <div className="calendar-scroll">
+        <div className="calendar-inner">
+          <div className="weekday-grid">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
 
-      <div className="calendar-grid">
-        {blankDays.map((_, index) => (
-          <div key={`blank-${index}`}></div>
-        ))}
+          <div className="calendar-grid">
+            {blankDays.map((_, index) => (
+              <div key={`blank-${index}`}></div>
+            ))}
 
-        {days.map((day) => {
-          const entry = getEntryForDay(day);
+            {days.map((day) => {
+              const entry = getEntryForDay(day);
 
-          const cellDate = new Date(year, month, day);
-          cellDate.setHours(0, 0, 0, 0);
+              const cellDate = new Date(year, month, day);
+              cellDate.setHours(0, 0, 0, 0);
 
-          const isToday =
-            cellDate.getTime() === actualToday.getTime();
+              const isToday =
+                cellDate.getTime() === actualToday.getTime();
 
-          const isPast = cellDate < actualToday;
+              const isPast = cellDate < actualToday;
 
-          return (
-            <DayCell
-              key={day}
-              day={day}
-              entry={entry}
-              isToday={isToday}
-              isPast={isPast}
-              onClick={() => setSelectedDay(day)}
-            />
-          );
-        })}
+              return (
+                <DayCell
+                  key={day}
+                  day={day}
+                  entry={entry}
+                  isToday={isToday}
+                  isPast={isPast}
+                  onClick={() => setSelectedDay(day)}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       <ReflectionTimeline entries={entries} />

@@ -1,0 +1,60 @@
+.opening-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: var(--paper);
+}
+
+.opening-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: opening-fade-in 0.9s ease both;
+}
+
+.opening-logo {
+  display: block;
+  width: min(390px, 80vw);
+  height: auto;
+}
+
+.opening-enter {
+  margin-top: var(--space-6);
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.opening-enter:hover {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+.opening-enter:focus-visible {
+  outline: 1px solid var(--ink-muted);
+  outline-offset: 6px;
+}
+
+@keyframes opening-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
