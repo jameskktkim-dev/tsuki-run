@@ -11,6 +11,37 @@ import "./MonthlyCalendar.css";
 
 const LEGACY_MONTH_KEY = "2026-06";
 
+const DEFAULT_GOAL = {
+  distance: 0,
+  runs: 0,
+  focus: "",
+};
+
+const normalizeGoal = (goal) => {
+  if (!goal || typeof goal !== "object") {
+    return DEFAULT_GOAL;
+  }
+
+  return {
+    distance: Number(goal.distance ?? 0),
+    runs: Number(goal.runs ?? 0),
+    focus: goal.focus ?? goal.phase ?? "",
+  };
+};
+
+const normalizeGoalsByMonth = (goalsByMonth) => {
+  if (!goalsByMonth || typeof goalsByMonth !== "object") {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(goalsByMonth).map(([monthKey, goal]) => [
+      monthKey,
+      normalizeGoal(goal),
+    ])
+  );
+};
+
 export default function MonthlyCalendar() {
   const [entriesByMonth, setEntriesByMonth] = useState(() => {
     const savedEntries = localStorage.getItem("tsuki-run-entries");
@@ -22,7 +53,6 @@ export default function MonthlyCalendar() {
     try {
       const parsedEntries = JSON.parse(savedEntries);
 
-      // 기존 배열 구조를 2026-06 데이터로 자동 이전
       if (Array.isArray(parsedEntries)) {
         return {
           [LEGACY_MONTH_KEY]: parsedEntries,
@@ -35,22 +65,37 @@ export default function MonthlyCalendar() {
     }
   });
 
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [goalsByMonth, setGoalsByMonth] = useState(() => {
+    const savedGoals = localStorage.getItem("tsuki-run-goals");
 
-  const [goal, setGoal] = useState(() => {
-    const savedGoal = localStorage.getItem("tsuki-run-goal");
+    if (savedGoals) {
+      try {
+        const parsedGoals = JSON.parse(savedGoals);
 
-    if (savedGoal) {
-      return JSON.parse(savedGoal);
+        return normalizeGoalsByMonth(parsedGoals);
+      } catch {
+        return {};
+      }
     }
 
-    return {
-      distance: 150,
-      runs: 20,
-      phase: "Victoria Marathon Base Phase",
-    };
+    const legacyGoal = localStorage.getItem("tsuki-run-goal");
+
+    if (legacyGoal) {
+      try {
+        return {
+          [LEGACY_MONTH_KEY]: normalizeGoal(
+            JSON.parse(legacyGoal)
+          ),
+        };
+      } catch {
+        return {};
+      }
+    }
+
+    return {};
   });
 
+  const [selectedDay, setSelectedDay] = useState(null);
   const [showGoalModal, setShowGoalModal] = useState(false);
 
   const [currentDate, setCurrentDate] = useState(() => {
@@ -72,10 +117,10 @@ export default function MonthlyCalendar() {
 
   useEffect(() => {
     localStorage.setItem(
-      "tsuki-run-goal",
-      JSON.stringify(goal)
+      "tsuki-run-goals",
+      JSON.stringify(goalsByMonth)
     );
-  }, [goal]);
+  }, [goalsByMonth]);
 
   const actualToday = new Date();
   actualToday.setHours(0, 0, 0, 0);
@@ -87,9 +132,15 @@ export default function MonthlyCalendar() {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  const monthKey = `${year}-${String(month + 1).padStart(2, "0")}`;
+  const monthKey = `${year}-${String(month + 1).padStart(
+    2,
+    "0"
+  )}`;
 
   const monthEntries = entriesByMonth[monthKey] || [];
+
+  const currentGoal =
+    goalsByMonth[monthKey] || DEFAULT_GOAL;
 
   const daysInMonth = new Date(
     year,
@@ -138,7 +189,9 @@ export default function MonthlyCalendar() {
   };
 
   const getEntryForDay = (day) => {
-    return monthEntries.find((entry) => entry.day === day);
+    return monthEntries.find(
+      (entry) => entry.day === day
+    );
   };
 
   const selectedEntry = selectedDay
@@ -171,11 +224,20 @@ export default function MonthlyCalendar() {
     setSelectedDay(null);
   };
 
+  const handleSaveGoal = (updatedGoal) => {
+    setGoalsByMonth((currentGoalsByMonth) => ({
+      ...currentGoalsByMonth,
+      [monthKey]: normalizeGoal(updatedGoal),
+    }));
+
+    setShowGoalModal(false);
+  };
+
   return (
     <div>
       <MonthlyGoal
         entries={monthEntries}
-        goal={goal}
+        goal={currentGoal}
         onEdit={() => setShowGoalModal(true)}
       />
 
@@ -221,11 +283,17 @@ export default function MonthlyCalendar() {
             {days.map((day) => {
               const entry = getEntryForDay(day);
 
-              const cellDate = new Date(year, month, day);
+              const cellDate = new Date(
+                year,
+                month,
+                day
+              );
+
               cellDate.setHours(0, 0, 0, 0);
 
               const isToday =
-                cellDate.getTime() === actualToday.getTime();
+                cellDate.getTime() ===
+                actualToday.getTime();
 
               const isPast = cellDate < actualToday;
 
@@ -257,12 +325,9 @@ export default function MonthlyCalendar() {
 
       <GoalModal
         isOpen={showGoalModal}
-        goal={goal}
+        goal={currentGoal}
         onClose={() => setShowGoalModal(false)}
-        onSave={(updatedGoal) => {
-          setGoal(updatedGoal);
-          setShowGoalModal(false);
-        }}
+        onSave={handleSaveGoal}
       />
     </div>
   );

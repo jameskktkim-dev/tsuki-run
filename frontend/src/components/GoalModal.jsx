@@ -7,14 +7,22 @@ export default function GoalModal({
   onClose,
   onSave,
 }) {
-  const [distance, setDistance] = useState(goal?.distance || 150);
-  const [runs, setRuns] = useState(goal?.runs || 20);
-  const [phase, setPhase] = useState(goal?.phase || "");
+  const [distance, setDistance] = useState(
+    goal?.distance ?? 0
+  );
+
+  const [runs, setRuns] = useState(
+    goal?.runs ?? 0
+  );
+
+  const [focus, setFocus] = useState(
+    goal?.focus ?? goal?.phase ?? ""
+  );
 
   useEffect(() => {
-    setDistance(goal?.distance || 150);
-    setRuns(goal?.runs || 20);
-    setPhase(goal?.phase || "");
+    setDistance(goal?.distance ?? 0);
+    setRuns(goal?.runs ?? 0);
+    setFocus(goal?.focus ?? goal?.phase ?? "");
   }, [goal, isOpen]);
 
   if (!isOpen) return null;
@@ -23,7 +31,7 @@ export default function GoalModal({
     onSave({
       distance: Number(distance),
       runs: Number(runs),
-      phase,
+      focus: focus.trim(),
     });
   };
 
@@ -39,10 +47,14 @@ export default function GoalModal({
           ×
         </button>
 
-        <h2 className="goal-modal-title">Monthly Goal</h2>
+        <h2 className="goal-modal-title">
+          Monthly Goal
+        </h2>
 
         <div className="goal-form-group">
-          <label htmlFor="goal-distance">Goal Distance</label>
+          <label htmlFor="goal-distance">
+            Goal Distance
+          </label>
 
           <div className="goal-input-row">
             <input
@@ -61,7 +73,9 @@ export default function GoalModal({
         </div>
 
         <div className="goal-form-group">
-          <label htmlFor="goal-runs">Target Runs</label>
+          <label htmlFor="goal-runs">
+            Target Runs
+          </label>
 
           <input
             id="goal-runs"
@@ -69,19 +83,25 @@ export default function GoalModal({
             min="0"
             step="1"
             value={runs}
-            onChange={(event) => setRuns(event.target.value)}
+            onChange={(event) =>
+              setRuns(event.target.value)
+            }
           />
         </div>
 
         <div className="goal-form-group">
-          <label htmlFor="goal-phase">Training Phase</label>
+          <label htmlFor="goal-focus">
+            Monthly Focus
+          </label>
 
           <input
-            id="goal-phase"
+            id="goal-focus"
             type="text"
-            value={phase}
-            onChange={(event) => setPhase(event.target.value)}
-            placeholder="Victoria Marathon Base Phase"
+            value={focus}
+            onChange={(event) =>
+              setFocus(event.target.value)
+            }
+            placeholder="What is your focus this month?"
           />
         </div>
 

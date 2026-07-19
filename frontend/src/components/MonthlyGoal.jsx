@@ -1,7 +1,11 @@
-export default function MonthlyGoal({ entries, goal, onEdit }) {
-  const goalDistance = Number(goal.distance || 0);
-  const goalRuns = Number(goal.runs || 0);
-  const trainingPhase = goal.phase;
+export default function MonthlyGoal({
+  entries,
+  goal,
+  onEdit,
+}) {
+  const goalDistance = Number(goal.distance ?? 0);
+  const goalRuns = Number(goal.runs ?? 0);
+  const monthlyFocus = goal.focus ?? "";
 
   const completedEntries = entries.filter(
     (entry) =>
@@ -11,7 +15,7 @@ export default function MonthlyGoal({ entries, goal, onEdit }) {
 
   const completedDistance = completedEntries.reduce(
     (total, entry) =>
-      total + Number(entry.result.distance || 0),
+      total + Number(entry.result.distance ?? 0),
     0
   );
 
@@ -20,7 +24,9 @@ export default function MonthlyGoal({ entries, goal, onEdit }) {
   const distanceProgress =
     goalDistance > 0
       ? Math.min(
-          Math.round((completedDistance / goalDistance) * 100),
+          Math.round(
+            (completedDistance / goalDistance) * 100
+          ),
           100
         )
       : 0;
@@ -65,13 +71,15 @@ export default function MonthlyGoal({ entries, goal, onEdit }) {
       >
         <div
           className="monthly-goal-progress-fill"
-          style={{ width: `${distanceProgress}%` }}
+          style={{
+            width: `${distanceProgress}%`,
+          }}
         />
       </div>
 
       <div className="monthly-goal-footer">
         <p className="monthly-goal-phase">
-          {trainingPhase}
+          {monthlyFocus}
         </p>
 
         <button
