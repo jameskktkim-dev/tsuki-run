@@ -46,39 +46,74 @@
 
 ### Month-specific Data
 
-- [ ] Month-specific Entries
-- [ ] Month-specific Goals
-- [ ] Month-specific Reflections
-- [ ] Local Storage Data Migration
+- [x] Month-specific Entries
+- [x] Month-specific Goals
+- [x] Month-specific Reflections
 
 ### Planner Improvements
 
-- [ ] Planned vs Completed Summary
-- [ ] Weekly Mileage
-- [ ] Long Run Counter
-- [ ] Monthly Completion State
+- [x] Monthly Focus
+- [x] Month-specific Goal Editing
 
-### Monthly Review
+### Parking Lot
 
-- [ ] Monthly Summary
-- [ ] Longest Run
-- [ ] Most Frequent Run Type
-- [ ] End-of-month Reflection
+- [ ] Weekly Mileage (On Hold)
+- [ ] Long Run Counter (On Hold)
+- [ ] Monthly Review (On Hold)
 
 ---
 
-## ☁️ Sprint 3 - Backend
+## ☁️ Sprint 3.1 - Backend Foundation
 
-- [ ] Django API
+- [x] Backend Project Structure
+- [x] Python Virtual Environment
+- [x] Django Project
+- [x] Planner App
+- [x] Database Setup (SQLite)
+- [x] Entry Model
+- [x] Monthly Goal Model
+- [x] Database Migration
+- [x] Django Admin
+- [x] Admin User
+
+---
+
+## 🔌 Sprint 3.2 - REST API
+
+- [ ] Django REST Framework
+- [ ] Entry API
+- [ ] Monthly Goal API
+- [ ] API Testing
+
+---
+
+## 🔐 Sprint 3.3 - Frontend Integration
+
+- [ ] React ↔ Django Integration
+- [ ] Replace LocalStorage
+- [ ] Backend Data Sync
+
+---
+
+## 👤 Sprint 3.4 - Authentication
+
+- [ ] User Registration
+- [ ] Login
+- [ ] User-specific Data
+
+---
+
+## 🚀 Sprint 3.5 - Deployment
+
 - [ ] PostgreSQL
-- [ ] User Authentication
 - [ ] Cloud Deployment
+- [ ] Production Configuration
 
 ---
 
 ## 🤖 Sprint 4 - AI
 
-- [ ] Monthly AI Reflection
+- [ ] Suggested Monthly Plan
 - [ ] Training Insights
 - [ ] Smart Suggestions
 
@@ -90,4 +125,3 @@
 - [ ] User Feedback
 - [ ] Bug Fixes
 - [ ] Performance Optimization
-- [ ] App Store Preparation
