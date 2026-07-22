@@ -249,3 +249,21 @@
 .reflection-prompt-section textarea::placeholder {
   color: var(--ink-faint);
 }
+
+.delete-entry-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  color: rgba(47, 43, 40, 0.58);
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.delete-entry-button:hover {
+  color: rgba(120, 45, 38, 0.9);
+}

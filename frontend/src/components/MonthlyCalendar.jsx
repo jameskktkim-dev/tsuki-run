@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { entries as initialEntries } from "../data/mockEntries";
+
+import {
+  createEntry,
+  deleteEntry,
+  fetchEntries,
+  updateEntry,
+} from "../api/entries";
 
 import MonthlyGoal from "./MonthlyGoal";
 import GoalModal from "./GoalModal";
@@ -42,28 +48,53 @@ const normalizeGoalsByMonth = (goalsByMonth) => {
   );
 };
 
+const toCalendarEntry = (entry) => {
+  const [, , day] = entry.date.split("-").map(Number);
+
+  return {
+    id: entry.id,
+    date: entry.date,
+    day,
+    plan: {
+      type: entry.planType || "",
+      distance:
+        entry.planDistance === null
+          ? ""
+          : Number(entry.planDistance),
+    },
+    result: {
+      type: entry.resultType || "",
+      distance:
+        entry.resultDistance === null
+          ? ""
+          : Number(entry.resultDistance),
+      reflection: entry.reflection || "",
+      completed: entry.completed,
+    },
+  };
+};
+
+const groupEntriesByMonth = (entries) => {
+  return entries.reduce((groupedEntries, entry) => {
+    const [year, month] = entry.date.split("-").map(Number);
+
+    const monthKey = `${year}-${String(month).padStart(
+      2,
+      "0"
+    )}`;
+
+    return {
+      ...groupedEntries,
+      [monthKey]: [
+        ...(groupedEntries[monthKey] || []),
+        toCalendarEntry(entry),
+      ],
+    };
+  }, {});
+};
+
 export default function MonthlyCalendar() {
-  const [entriesByMonth, setEntriesByMonth] = useState(() => {
-    const savedEntries = localStorage.getItem("tsuki-run-entries");
-
-    if (!savedEntries) {
-      return initialEntries;
-    }
-
-    try {
-      const parsedEntries = JSON.parse(savedEntries);
-
-      if (Array.isArray(parsedEntries)) {
-        return {
-          [LEGACY_MONTH_KEY]: parsedEntries,
-        };
-      }
-
-      return parsedEntries;
-    } catch {
-      return initialEntries;
-    }
-  });
+  const [entriesByMonth, setEntriesByMonth] = useState({});
 
   const [goalsByMonth, setGoalsByMonth] = useState(() => {
     const savedGoals = localStorage.getItem("tsuki-run-goals");
@@ -109,11 +140,22 @@ export default function MonthlyCalendar() {
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      "tsuki-run-entries",
-      JSON.stringify(entriesByMonth)
-    );
-  }, [entriesByMonth]);
+    const loadEntries = async () => {
+      try {
+        const entries = await fetchEntries();
+        const groupedEntries = groupEntriesByMonth(entries);
+
+        setEntriesByMonth(groupedEntries);
+      } catch (error) {
+        console.error(
+          "Unable to load Django entries:",
+          error
+        );
+      }
+    };
+
+    loadEntries();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(
@@ -164,6 +206,16 @@ export default function MonthlyCalendar() {
     () => null
   );
 
+  const getEntryForDay = (day) => {
+    return monthEntries.find(
+      (entry) => entry.day === day
+    );
+  };
+
+  const selectedEntry = selectedDay
+    ? getEntryForDay(selectedDay)
+    : null;
+
   const goToPreviousMonth = () => {
     setCurrentDate(
       new Date(
@@ -188,40 +240,101 @@ export default function MonthlyCalendar() {
     setSelectedDay(null);
   };
 
-  const getEntryForDay = (day) => {
-    return monthEntries.find(
-      (entry) => entry.day === day
+  const handleSaveEntry = async (updatedEntry) => {
+    const date = `${monthKey}-${String(
+      updatedEntry.day
+    ).padStart(2, "0")}`;
+
+    const existingEntry = monthEntries.find(
+      (entry) => entry.day === updatedEntry.day
     );
+
+    const apiEntry = {
+      date,
+      planType: updatedEntry.plan.type,
+      planDistance:
+        updatedEntry.plan.distance === ""
+          ? null
+          : Number(updatedEntry.plan.distance),
+      resultType: updatedEntry.result.type,
+      resultDistance:
+        updatedEntry.result.distance === ""
+          ? null
+          : Number(updatedEntry.result.distance),
+      completed: Boolean(updatedEntry.result.type),
+      reflection: updatedEntry.result.reflection,
+      user: 1,
+    };
+
+    try {
+      const savedEntry = existingEntry?.id
+        ? await updateEntry(existingEntry.id, apiEntry)
+        : await createEntry(apiEntry);
+
+      const calendarEntry = toCalendarEntry(savedEntry);
+
+      setEntriesByMonth((currentEntriesByMonth) => {
+        const currentMonthEntries =
+          currentEntriesByMonth[monthKey] || [];
+
+        const entryAlreadyExists =
+          currentMonthEntries.some(
+            (entry) => entry.id === calendarEntry.id
+          );
+
+        const updatedMonthEntries = entryAlreadyExists
+          ? currentMonthEntries.map((entry) =>
+              entry.id === calendarEntry.id
+                ? calendarEntry
+                : entry
+            )
+          : [...currentMonthEntries, calendarEntry];
+
+        return {
+          ...currentEntriesByMonth,
+          [monthKey]: updatedMonthEntries,
+        };
+      });
+
+      setSelectedDay(null);
+    } catch (error) {
+      console.error(
+        "Unable to save Django entry:",
+        error
+      );
+    }
   };
 
-  const selectedEntry = selectedDay
-    ? getEntryForDay(selectedDay)
-    : null;
+  const handleDeleteEntry = async () => {
+    if (!selectedEntry?.id) {
+      return;
+    }
 
-  const handleSaveEntry = (updatedEntry) => {
-    setEntriesByMonth((currentEntriesByMonth) => {
-      const currentMonthEntries =
-        currentEntriesByMonth[monthKey] || [];
+    try {
+      await deleteEntry(selectedEntry.id);
 
-      const existingEntry = currentMonthEntries.find(
-        (entry) => entry.day === updatedEntry.day
+      setEntriesByMonth((currentEntriesByMonth) => {
+        const currentMonthEntries =
+          currentEntriesByMonth[monthKey] || [];
+
+        const updatedMonthEntries =
+          currentMonthEntries.filter(
+            (entry) => entry.id !== selectedEntry.id
+          );
+
+        return {
+          ...currentEntriesByMonth,
+          [monthKey]: updatedMonthEntries,
+        };
+      });
+
+      setSelectedDay(null);
+    } catch (error) {
+      console.error(
+        "Unable to delete Django entry:",
+        error
       );
-
-      const updatedMonthEntries = existingEntry
-        ? currentMonthEntries.map((entry) =>
-            entry.day === updatedEntry.day
-              ? updatedEntry
-              : entry
-          )
-        : [...currentMonthEntries, updatedEntry];
-
-      return {
-        ...currentEntriesByMonth,
-        [monthKey]: updatedMonthEntries,
-      };
-    });
-
-    setSelectedDay(null);
+    }
   };
 
   const handleSaveGoal = (updatedGoal) => {
@@ -321,6 +434,7 @@ export default function MonthlyCalendar() {
         entry={selectedEntry}
         onClose={() => setSelectedDay(null)}
         onSave={handleSaveEntry}
+        onDelete={handleDeleteEntry}
       />
 
       <GoalModal

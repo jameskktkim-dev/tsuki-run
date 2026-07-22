@@ -69,29 +69,31 @@
 - [x] Python Virtual Environment
 - [x] Django Project
 - [x] Planner App
-- [x] Database Setup (SQLite)
+- [x] Database Setup
 - [x] Entry Model
 - [x] Monthly Goal Model
-- [x] Database Migration
 - [x] Django Admin
-- [x] Admin User
 
 ---
 
 ## 🔌 Sprint 3.2 - REST API
 
-- [ ] Django REST Framework
-- [ ] Entry API
-- [ ] Monthly Goal API
-- [ ] API Testing
+- [x] Django REST Framework
+- [x] Serializer
+- [x] Entry CRUD API
+- [x] Monthly Goal API
+- [x] API Testing
 
 ---
 
-## 🔐 Sprint 3.3 - Frontend Integration
+## 🔗 Sprint 3.3 - React Integration
 
-- [ ] React ↔ Django Integration
+- [ ] Connect React to Django
+- [ ] Fetch Entries
+- [ ] Fetch Monthly Goals
 - [ ] Replace LocalStorage
-- [ ] Backend Data Sync
+- [ ] Save Entries to Backend
+- [ ] Save Goals to Backend
 
 ---
 

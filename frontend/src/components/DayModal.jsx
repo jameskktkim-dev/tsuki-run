@@ -9,6 +9,7 @@ export default function DayModal({
   entry,
   onClose,
   onSave,
+  onDelete,
 }) {
   const [planType, setPlanType] = useState("");
   const [planDistance, setPlanDistance] = useState("");
@@ -19,10 +20,10 @@ export default function DayModal({
 
   useEffect(() => {
     setPlanType(entry?.plan?.type || "");
-    setPlanDistance(entry?.plan?.distance || "");
+    setPlanDistance(entry?.plan?.distance ?? "");
 
     setResultType(entry?.result?.type || "");
-    setResultDistance(entry?.result?.distance || "");
+    setResultDistance(entry?.result?.distance ?? "");
     setReflection(entry?.result?.reflection || "");
   }, [entry, selectedDay]);
 
@@ -70,9 +71,7 @@ export default function DayModal({
           <select
             id="plan-type"
             value={planType}
-            onChange={(event) =>
-              setPlanType(event.target.value)
-            }
+            onChange={(event) => setPlanType(event.target.value)}
           >
             <option value="">Select training type</option>
             <option value="Easy Run">Easy Run</option>
@@ -85,9 +84,7 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label htmlFor="plan-distance">
-            Planned Distance
-          </label>
+          <label htmlFor="plan-distance">Planned Distance</label>
 
           <div className="distance-row">
             <input
@@ -96,9 +93,7 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={planDistance}
-              onChange={(event) =>
-                setPlanDistance(event.target.value)
-              }
+              onChange={(event) => setPlanDistance(event.target.value)}
               placeholder="0"
             />
 
@@ -109,16 +104,12 @@ export default function DayModal({
         <h3>Result</h3>
 
         <div className="form-group">
-          <label htmlFor="result-type">
-            Training Type
-          </label>
+          <label htmlFor="result-type">Training Type</label>
 
           <select
             id="result-type"
             value={resultType}
-            onChange={(event) =>
-              setResultType(event.target.value)
-            }
+            onChange={(event) => setResultType(event.target.value)}
           >
             <option value="">Select training type</option>
             <option value="Easy Run">Easy Run</option>
@@ -131,9 +122,7 @@ export default function DayModal({
         </div>
 
         <div className="form-group">
-          <label htmlFor="result-distance">
-            Actual Distance
-          </label>
+          <label htmlFor="result-distance">Actual Distance</label>
 
           <div className="distance-row">
             <input
@@ -142,9 +131,7 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={resultDistance}
-              onChange={(event) =>
-                setResultDistance(event.target.value)
-              }
+              onChange={(event) => setResultDistance(event.target.value)}
               placeholder="0"
             />
 
@@ -163,9 +150,7 @@ export default function DayModal({
 
           <textarea
             value={reflection}
-            onChange={(event) =>
-              setReflection(event.target.value)
-            }
+            onChange={(event) => setReflection(event.target.value)}
             placeholder="Write a quiet note..."
             aria-label="Reflection"
           />
@@ -178,6 +163,16 @@ export default function DayModal({
         >
           Save Entry
         </button>
+
+        {entry?.id && (
+          <button
+            type="button"
+            className="delete-entry-button"
+            onClick={onDelete}
+          >
+            Delete Entry
+          </button>
+        )}
       </div>
     </div>
   );
