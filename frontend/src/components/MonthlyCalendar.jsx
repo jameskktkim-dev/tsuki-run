@@ -7,6 +7,12 @@ import {
   updateEntry,
 } from "../api/entries";
 
+import {
+  createGoal,
+  fetchGoals,
+  updateGoal,
+} from "../api/goals";
+
 import MonthlyGoal from "./MonthlyGoal";
 import GoalModal from "./GoalModal";
 import ReflectionTimeline from "./ReflectionTimeline";
@@ -15,37 +21,11 @@ import DayCell from "./DayCell";
 
 import "./MonthlyCalendar.css";
 
-const LEGACY_MONTH_KEY = "2026-06";
-
 const DEFAULT_GOAL = {
+  id: null,
   distance: 0,
   runs: 0,
   focus: "",
-};
-
-const normalizeGoal = (goal) => {
-  if (!goal || typeof goal !== "object") {
-    return DEFAULT_GOAL;
-  }
-
-  return {
-    distance: Number(goal.distance ?? 0),
-    runs: Number(goal.runs ?? 0),
-    focus: goal.focus ?? goal.phase ?? "",
-  };
-};
-
-const normalizeGoalsByMonth = (goalsByMonth) => {
-  if (!goalsByMonth || typeof goalsByMonth !== "object") {
-    return {};
-  }
-
-  return Object.fromEntries(
-    Object.entries(goalsByMonth).map(([monthKey, goal]) => [
-      monthKey,
-      normalizeGoal(goal),
-    ])
-  );
 };
 
 const toCalendarEntry = (entry) => {
@@ -76,12 +56,7 @@ const toCalendarEntry = (entry) => {
 
 const groupEntriesByMonth = (entries) => {
   return entries.reduce((groupedEntries, entry) => {
-    const [year, month] = entry.date.split("-").map(Number);
-
-    const monthKey = `${year}-${String(month).padStart(
-      2,
-      "0"
-    )}`;
+    const monthKey = entry.date.slice(0, 7);
 
     return {
       ...groupedEntries,
@@ -93,38 +68,30 @@ const groupEntriesByMonth = (entries) => {
   }, {});
 };
 
+const toCalendarGoal = (goal) => {
+  return {
+    id: goal.id,
+    month: goal.month,
+    distance: Number(goal.distance ?? 0),
+    runs: Number(goal.runs ?? 0),
+    focus: goal.focus || "",
+  };
+};
+
+const groupGoalsByMonth = (goals) => {
+  return goals.reduce((groupedGoals, goal) => {
+    const monthKey = goal.month.slice(0, 7);
+
+    return {
+      ...groupedGoals,
+      [monthKey]: toCalendarGoal(goal),
+    };
+  }, {});
+};
+
 export default function MonthlyCalendar() {
   const [entriesByMonth, setEntriesByMonth] = useState({});
-
-  const [goalsByMonth, setGoalsByMonth] = useState(() => {
-    const savedGoals = localStorage.getItem("tsuki-run-goals");
-
-    if (savedGoals) {
-      try {
-        const parsedGoals = JSON.parse(savedGoals);
-
-        return normalizeGoalsByMonth(parsedGoals);
-      } catch {
-        return {};
-      }
-    }
-
-    const legacyGoal = localStorage.getItem("tsuki-run-goal");
-
-    if (legacyGoal) {
-      try {
-        return {
-          [LEGACY_MONTH_KEY]: normalizeGoal(
-            JSON.parse(legacyGoal)
-          ),
-        };
-      } catch {
-        return {};
-      }
-    }
-
-    return {};
-  });
+  const [goalsByMonth, setGoalsByMonth] = useState({});
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [showGoalModal, setShowGoalModal] = useState(false);
@@ -140,29 +107,25 @@ export default function MonthlyCalendar() {
   });
 
   useEffect(() => {
-    const loadEntries = async () => {
+    const loadCalendarData = async () => {
       try {
-        const entries = await fetchEntries();
-        const groupedEntries = groupEntriesByMonth(entries);
+        const [entries, goals] = await Promise.all([
+          fetchEntries(),
+          fetchGoals(),
+        ]);
 
-        setEntriesByMonth(groupedEntries);
+        setEntriesByMonth(groupEntriesByMonth(entries));
+        setGoalsByMonth(groupGoalsByMonth(goals));
       } catch (error) {
         console.error(
-          "Unable to load Django entries:",
+          "Unable to load Django calendar data:",
           error
         );
       }
     };
 
-    loadEntries();
+    loadCalendarData();
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "tsuki-run-goals",
-      JSON.stringify(goalsByMonth)
-    );
-  }, [goalsByMonth]);
 
   const actualToday = new Date();
   actualToday.setHours(0, 0, 0, 0);
@@ -337,13 +300,34 @@ export default function MonthlyCalendar() {
     }
   };
 
-  const handleSaveGoal = (updatedGoal) => {
-    setGoalsByMonth((currentGoalsByMonth) => ({
-      ...currentGoalsByMonth,
-      [monthKey]: normalizeGoal(updatedGoal),
-    }));
+  const handleSaveGoal = async (updatedGoal) => {
+    const apiGoal = {
+      month: `${monthKey}-01`,
+      distance: Number(updatedGoal.distance || 0),
+      runs: Number(updatedGoal.runs || 0),
+      focus: updatedGoal.focus || "",
+      user: 1,
+    };
 
-    setShowGoalModal(false);
+    try {
+      const savedGoal = currentGoal.id
+        ? await updateGoal(currentGoal.id, apiGoal)
+        : await createGoal(apiGoal);
+
+      const calendarGoal = toCalendarGoal(savedGoal);
+
+      setGoalsByMonth((currentGoalsByMonth) => ({
+        ...currentGoalsByMonth,
+        [monthKey]: calendarGoal,
+      }));
+
+      setShowGoalModal(false);
+    } catch (error) {
+      console.error(
+        "Unable to save Django monthly goal:",
+        error
+      );
+    }
   };
 
   return (

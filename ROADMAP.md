@@ -1,6 +1,6 @@
 # Tsuki Run Roadmap
 
-## 🌱 Sprint 1 - Foundation (MVP)
+## Sprint 1 - Foundation (MVP)
 
 - [x] Vision
 - [x] Design Principles
@@ -18,7 +18,7 @@
 
 ---
 
-## 🌿 Sprint 2 - Reflection Experience
+## Sprint 2 - Reflection Experience
 
 - [x] Better Reflection
 - [x] Reflection Prompts
@@ -27,7 +27,7 @@
 
 ---
 
-## 🎨 Sprint 2.5 - Design Foundation
+## Sprint 2.5 - Design Foundation
 
 - [x] Brand Identity
 - [x] Logo System
@@ -42,7 +42,7 @@
 
 ---
 
-## 📓 Sprint 2.7 - Planner Experience
+## Sprint 2.7 - Planner Experience
 
 ### Month-specific Data
 
@@ -63,7 +63,7 @@
 
 ---
 
-## ☁️ Sprint 3.1 - Backend Foundation
+## Sprint 3.1 - Backend Foundation
 
 - [x] Backend Project Structure
 - [x] Python Virtual Environment
@@ -76,54 +76,83 @@
 
 ---
 
-## 🔌 Sprint 3.2 - REST API
+## Sprint 3.2 - REST API
 
 - [x] Django REST Framework
-- [x] Serializer
+- [x] Entry Serializer
+- [x] Monthly Goal Serializer
 - [x] Entry CRUD API
-- [x] Monthly Goal API
+- [x] Monthly Goal CRUD API
 - [x] API Testing
 
 ---
 
-## 🔗 Sprint 3.3 - React Integration
+## Sprint 3.3 - Entry Backend Integration
 
-- [ ] Connect React to Django
-- [ ] Fetch Entries
-- [ ] Fetch Monthly Goals
-- [ ] Replace LocalStorage
-- [ ] Save Entries to Backend
-- [ ] Save Goals to Backend
+- [x] Connect React to Django
+- [x] API Layer (entries.js)
+- [x] Fetch Entries
+- [x] Create Entry
+- [x] Update Entry
+- [x] Delete Entry
+- [x] Remove Entry LocalStorage
 
 ---
 
-## 👤 Sprint 3.4 - Authentication
+## Sprint 3.4 - Monthly Goal Backend Integration
+
+- [x] API Layer (goals.js)
+- [x] Fetch Monthly Goals
+- [x] Create Monthly Goal
+- [x] Update Monthly Goal
+- [x] Remove Goal LocalStorage
+
+---
+
+## Sprint 3.5 - Authentication
 
 - [ ] User Registration
 - [ ] Login
-- [ ] User-specific Data
+- [ ] JWT Authentication
+- [ ] User-specific Entries
+- [ ] User-specific Monthly Goals
+- [ ] Remove Hardcoded User
 
 ---
 
-## 🚀 Sprint 3.5 - Deployment
+## Sprint 3.6 - Deployment
 
 - [ ] PostgreSQL
 - [ ] Cloud Deployment
 - [ ] Production Configuration
+- [ ] Domain & HTTPS
 
 ---
 
-## 🤖 Sprint 4 - AI
+## Sprint 4 - AI Companion
+
+### AI Planner
 
 - [ ] Suggested Monthly Plan
-- [ ] Training Insights
-- [ ] Smart Suggestions
+- [ ] Beginner-friendly Monthly Goal Suggestion
+
+### AI Reflection
+
+- [ ] Monthly Reflection Summary
+- [ ] Gentle Training Insights
+
+### AI Companion
+
+- [ ] Quiet Suggestions
+- [ ] Reflection Prompts from Training History
 
 ---
 
-## 🚀 Sprint 5 - Public Beta
+## Sprint 5 - Public Beta
 
 - [ ] Landing Page
+- [ ] Invite Test Users
 - [ ] User Feedback
 - [ ] Bug Fixes
 - [ ] Performance Optimization
+- [ ] Beta Launch

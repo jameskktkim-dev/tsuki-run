@@ -4,6 +4,7 @@ from .views import (
     EntryListCreateAPIView,
     EntryRetrieveUpdateDestroyAPIView,
     MonthlyGoalListCreateAPIView,
+    MonthlyGoalRetrieveUpdateDestroyAPIView,
 )
 
 urlpatterns = [
@@ -21,5 +22,10 @@ urlpatterns = [
         "monthly-goals/",
         MonthlyGoalListCreateAPIView.as_view(),
         name="monthly-goal-list-create",
+    ),
+    path(
+        "monthly-goals/<int:pk>/",
+        MonthlyGoalRetrieveUpdateDestroyAPIView.as_view(),
+        name="monthly-goal-detail",
     ),
 ]

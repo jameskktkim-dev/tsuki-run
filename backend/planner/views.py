@@ -16,6 +16,15 @@ class EntryRetrieveUpdateDestroyAPIView(
     serializer_class = EntrySerializer
 
 
-class MonthlyGoalListCreateAPIView(generics.ListCreateAPIView):
+class MonthlyGoalListCreateAPIView(
+    generics.ListCreateAPIView
+):
+    queryset = MonthlyGoal.objects.all()
+    serializer_class = MonthlyGoalSerializer
+
+
+class MonthlyGoalRetrieveUpdateDestroyAPIView(
+    generics.RetrieveUpdateDestroyAPIView
+):
     queryset = MonthlyGoal.objects.all()
     serializer_class = MonthlyGoalSerializer
