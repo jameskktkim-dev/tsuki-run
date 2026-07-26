@@ -49,3 +49,7 @@ Thumbs.db
 
 .vscode/
 .idea/
+
+
+# Django static files
+backend/staticfiles/
