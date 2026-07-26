@@ -1,3 +1,5 @@
+import { authFetch } from "./auth";
+
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
 async function handleResponse(response) {
@@ -19,25 +21,30 @@ async function handleResponse(response) {
 }
 
 export async function fetchEntries() {
-  const response = await fetch(`${API_BASE_URL}/entries/`);
+  const response = await authFetch(
+    `${API_BASE_URL}/entries/`
+  );
 
   return handleResponse(response);
 }
 
 export async function createEntry(entryData) {
-  const response = await fetch(`${API_BASE_URL}/entries/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(entryData),
-  });
+  const response = await authFetch(
+    `${API_BASE_URL}/entries/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(entryData),
+    }
+  );
 
   return handleResponse(response);
 }
 
 export async function updateEntry(entryId, entryData) {
-  const response = await fetch(
+  const response = await authFetch(
     `${API_BASE_URL}/entries/${entryId}/`,
     {
       method: "PATCH",
@@ -52,7 +59,7 @@ export async function updateEntry(entryId, entryData) {
 }
 
 export async function deleteEntry(entryId) {
-  const response = await fetch(
+  const response = await authFetch(
     `${API_BASE_URL}/entries/${entryId}/`,
     {
       method: "DELETE",

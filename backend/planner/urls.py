@@ -5,9 +5,15 @@ from .views import (
     EntryRetrieveUpdateDestroyAPIView,
     MonthlyGoalListCreateAPIView,
     MonthlyGoalRetrieveUpdateDestroyAPIView,
+    RegisterAPIView,
 )
 
 urlpatterns = [
+    path(
+        "register/",
+        RegisterAPIView.as_view(),
+        name="register",
+    ),
     path(
         "entries/",
         EntryListCreateAPIView.as_view(),

@@ -1,86 +1,82 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Entry, MonthlyGoal
 
 
 class EntrySerializer(serializers.ModelSerializer):
-    planType = serializers.CharField(
-        source="plan_type",
-        max_length=50,
-        allow_blank=True,
-        required=False,
-    )
-
-    planDistance = serializers.DecimalField(
-        source="plan_distance",
-        max_digits=6,
-        decimal_places=2,
-        allow_null=True,
-        required=False,
-    )
-
-    resultType = serializers.CharField(
-        source="result_type",
-        max_length=50,
-        allow_blank=True,
-        required=False,
-    )
-
-    resultDistance = serializers.DecimalField(
-        source="result_distance",
-        max_digits=6,
-        decimal_places=2,
-        allow_null=True,
-        required=False,
-    )
-
-    createdAt = serializers.DateTimeField(
-        source="created_at",
-        read_only=True,
-    )
-
-    updatedAt = serializers.DateTimeField(
-        source="updated_at",
-        read_only=True,
-    )
-
     class Meta:
         model = Entry
-        fields = [
+        fields = "__all__"
+        read_only_fields = [
             "id",
-            "date",
-            "planType",
-            "planDistance",
-            "resultType",
-            "resultDistance",
-            "completed",
-            "reflection",
+            "user",
             "createdAt",
             "updatedAt",
-            "user",
         ]
 
 
 class MonthlyGoalSerializer(serializers.ModelSerializer):
-    createdAt = serializers.DateTimeField(
-        source="created_at",
-        read_only=True,
-    )
+    class Meta:
+        model = MonthlyGoal
+        fields = "__all__"
+        read_only_fields = [
+            "id",
+            "user",
+            "createdAt",
+            "updatedAt",
+        ]
 
-    updatedAt = serializers.DateTimeField(
-        source="updated_at",
-        read_only=True,
+
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
+    password = serializers.CharField(
+        write_only=True,
+        min_length=8,
+        error_messages={
+            "min_length": (
+                "Password must be at least 8 characters."
+            ),
+        },
     )
 
     class Meta:
-        model = MonthlyGoal
+        model = User
         fields = [
             "id",
-            "month",
-            "distance",
-            "runs",
-            "focus",
-            "createdAt",
-            "updatedAt",
-            "user",
+            "username",
+            "email",
+            "password",
         ]
+
+    def validate_username(self, value):
+        username = value.strip()
+
+        if User.objects.filter(
+            username__iexact=username
+        ).exists():
+            raise serializers.ValidationError(
+                "This username is already taken."
+            )
+
+        return username
+
+    def validate_email(self, value):
+        email = value.strip().lower()
+
+        if User.objects.filter(
+            email__iexact=email
+        ).exists():
+            raise serializers.ValidationError(
+                "An account already exists with this email."
+            )
+
+        return email
+
+    def create(self, validated_data):
+        return User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+        )

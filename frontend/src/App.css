@@ -27,7 +27,37 @@
 .app-shell {
   max-width: 1180px;
   margin: 0 auto;
-  padding: var(--space-6) 36px var(--space-7);
+  padding: 32px 36px var(--space-7);
+}
+
+.app-utility {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.app-logout {
+  padding: 0 0 3px;
+  border: none;
+  border-bottom: 1px solid rgba(47, 43, 40, 0.22);
+  background: transparent;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(47, 43, 40, 0.46);
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.app-logout:hover {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
 }
 
 .app-header {
@@ -45,20 +75,6 @@
   height: auto;
 }
 
-@media (max-width: 768px) {
-  .app-shell {
-    padding: var(--space-4) var(--space-3) var(--space-6);
-  }
-
-  .app-header {
-    padding-bottom: var(--space-3);
-  }
-
-  .app-logo {
-    width: min(260px, 78vw);
-  }
-}
-
 @media (max-width: 1050px) {
   .app-shell {
     padding-top: var(--space-5);
@@ -70,5 +86,26 @@
 
   .app-logo {
     width: min(300px, 72vw);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding:
+      var(--space-4)
+      var(--space-3)
+      var(--space-6);
+  }
+
+  .app-utility {
+    margin-bottom: var(--space-3);
+  }
+
+  .app-header {
+    padding-bottom: var(--space-3);
+  }
+
+  .app-logo {
+    width: min(260px, 78vw);
   }
 }
