@@ -409,7 +409,10 @@ export default function MonthlyCalendar() {
         </div>
       </div>
 
-      <ReflectionTimeline entries={monthEntries} />
+      <ReflectionTimeline
+        entries={monthEntries}
+        monthName={monthName}
+      />
 
       <DayModal
         selectedDay={selectedDay}

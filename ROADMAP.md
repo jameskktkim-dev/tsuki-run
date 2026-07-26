@@ -63,6 +63,18 @@
 
 ---
 
+## Sprint 2.8 - Design Polish
+
+- [ ] Final Logo
+- [ ] Account Menu
+- [ ] Empty States
+- [ ] Loading States
+- [ ] Error States
+- [ ] Success Messages
+- [ ] Final Typography Polish
+
+---
+
 ## Sprint 3.1 - Backend Foundation
 
 - [x] Backend Project Structure
@@ -111,21 +123,29 @@
 
 ## Sprint 3.5 - Authentication
 
-- [ ] User Registration
-- [ ] Login
-- [ ] JWT Authentication
-- [ ] User-specific Entries
-- [ ] User-specific Monthly Goals
-- [ ] Remove Hardcoded User
+- [x] User Registration
+- [x] Login
+- [x] JWT Authentication
+- [x] Refresh Token
+- [x] User-specific Entries
+- [x] User-specific Monthly Goals
+- [x] Remove Hardcoded User
+- [x] Registration Validation
 
 ---
 
 ## Sprint 3.6 - Deployment
 
 - [ ] PostgreSQL
-- [ ] Cloud Deployment
-- [ ] Production Configuration
+- [ ] Database Migration
+- [ ] Environment Variables
+- [ ] Production Settings
+- [ ] Static Files
+- [ ] Backend Deployment
+- [ ] Frontend Deployment
+- [ ] Connect Frontend & Backend
 - [ ] Domain & HTTPS
+- [ ] Production Testing
 
 ---
 
@@ -134,7 +154,7 @@
 ### AI Planner
 
 - [ ] Suggested Monthly Plan
-- [ ] Beginner-friendly Monthly Goal Suggestion
+- [ ] Beginner-friendly Goal Suggestions
 
 ### AI Reflection
 
@@ -144,7 +164,8 @@
 ### AI Companion
 
 - [ ] Quiet Suggestions
-- [ ] Reflection Prompts from Training History
+- [ ] Reflection Prompts from History
+- [ ] Monthly Conversation
 
 ---
 
@@ -155,4 +176,21 @@
 - [ ] User Feedback
 - [ ] Bug Fixes
 - [ ] Performance Optimization
+- [ ] Analytics
+- [ ] Privacy Policy
+- [ ] Terms of Service
 - [ ] Beta Launch
+
+---
+
+## Sprint 6 - Official Launch
+
+- [ ] Beta Feedback Review
+- [ ] Premium Plan
+- [ ] Stripe Billing
+- [ ] Email Verification
+- [ ] Password Reset
+- [ ] AI Plus Features
+- [ ] Public Release
+
+---
