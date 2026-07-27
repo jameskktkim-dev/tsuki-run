@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://127.0.0.1:8000/api";
+const API_BASE_URL =
+  "https://tsuki-run-api.onrender.com/api";
 
 const ACCESS_TOKEN_KEY = "tsuki-run-access-token";
 const REFRESH_TOKEN_KEY = "tsuki-run-refresh-token";
