@@ -256,3 +256,13 @@
     flex-wrap: wrap;
   }
 }
+
+.auth-field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-switch button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

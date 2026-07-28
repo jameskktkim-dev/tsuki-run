@@ -1,5 +1,4 @@
-const API_BASE_URL =
-  "https://tsuki-run-api.onrender.com/api";
+import { API_BASE_URL } from "./config";
 
 const ACCESS_TOKEN_KEY = "tsuki-run-access-token";
 const REFRESH_TOKEN_KEY = "tsuki-run-refresh-token";

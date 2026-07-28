@@ -7,25 +7,60 @@ import tsukiLogo from "../assets/tsuki-run-logo.svg";
 import "./Login.css";
 
 function getErrorMessage(error) {
-  try {
-    const parsedError = JSON.parse(error.message);
+  const fallbackMessage =
+    "Unable to create your account. Please try again.";
 
-    if (parsedError.username) {
+  const rawMessage =
+    typeof error?.message === "string"
+      ? error.message
+      : "";
+
+  const normalizedMessage =
+    rawMessage.toLowerCase();
+
+  if (
+    normalizedMessage.includes("network") ||
+    normalizedMessage.includes("fetch")
+  ) {
+    return "Unable to connect to the server. Please try again.";
+  }
+
+  try {
+    const parsedError = JSON.parse(rawMessage);
+
+    if (parsedError.username?.[0]) {
       return parsedError.username[0];
     }
 
-    if (parsedError.email) {
+    if (parsedError.email?.[0]) {
       return parsedError.email[0];
     }
 
-    if (parsedError.password) {
+    if (parsedError.password?.[0]) {
       return parsedError.password[0];
     }
+
+    if (parsedError.detail) {
+      return parsedError.detail;
+    }
+
+    if (parsedError.non_field_errors?.[0]) {
+      return parsedError.non_field_errors[0];
+    }
   } catch {
-    return error.message;
+    if (normalizedMessage.includes("already exists")) {
+      return "That username or email is already in use.";
+    }
+
+    if (
+      normalizedMessage.includes("400") ||
+      normalizedMessage.includes("invalid")
+    ) {
+      return "Please check your details and try again.";
+    }
   }
 
-  return error.message;
+  return fallbackMessage;
 }
 
 export default function Register({
@@ -120,6 +155,7 @@ export default function Register({
                   setUsername(event.target.value)
                 }
                 autoComplete="username"
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -136,6 +172,7 @@ export default function Register({
                   setEmail(event.target.value)
                 }
                 autoComplete="email"
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -153,6 +190,7 @@ export default function Register({
                 }
                 autoComplete="new-password"
                 minLength={8}
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -172,6 +210,7 @@ export default function Register({
                 }
                 autoComplete="new-password"
                 minLength={8}
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -188,7 +227,7 @@ export default function Register({
               disabled={isSubmitting}
             >
               {isSubmitting
-                ? "Creating account..."
+                ? "Creating account…"
                 : "Create account"}
             </button>
           </form>
@@ -199,6 +238,7 @@ export default function Register({
             <button
               type="button"
               onClick={onShowLogin}
+              disabled={isSubmitting}
             >
               Sign in
             </button>

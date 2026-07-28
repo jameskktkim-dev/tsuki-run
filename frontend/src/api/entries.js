@@ -1,7 +1,5 @@
 import { authFetch } from "./auth";
-
-const API_BASE_URL =
-  "https://tsuki-run-api.onrender.com/api";
+import { API_BASE_URL } from "./config";
 
 async function handleResponse(response) {
   if (!response.ok) {

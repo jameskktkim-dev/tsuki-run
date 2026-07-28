@@ -23,7 +23,28 @@ export default function Login({
       await login(username.trim(), password);
       onLogin();
     } catch (requestError) {
-      setError(requestError.message);
+      const message =
+        requestError.message?.toLowerCase() ?? "";
+
+      if (
+        message.includes("401") ||
+        message.includes("invalid")
+      ) {
+        setError(
+          "Incorrect username or password."
+        );
+      } else if (
+        message.includes("network") ||
+        message.includes("fetch")
+      ) {
+        setError(
+          "Unable to connect to the server. Please try again."
+        );
+      } else {
+        setError(
+          "Something went wrong. Please try again."
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -71,6 +92,7 @@ export default function Login({
                   setUsername(event.target.value)
                 }
                 autoComplete="username"
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -87,6 +109,7 @@ export default function Login({
                   setPassword(event.target.value)
                 }
                 autoComplete="current-password"
+                disabled={isSubmitting}
                 required
               />
             </label>
@@ -103,7 +126,7 @@ export default function Login({
               disabled={isSubmitting}
             >
               {isSubmitting
-                ? "Signing in..."
+                ? "Signing in…"
                 : "Sign in"}
             </button>
           </form>
@@ -114,6 +137,7 @@ export default function Login({
             <button
               type="button"
               onClick={onShowRegister}
+              disabled={isSubmitting}
             >
               Create an account
             </button>
