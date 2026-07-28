@@ -57,21 +57,21 @@
 
 ### Parking Lot
 
-- [ ] Weekly Mileage (On Hold)
-- [ ] Long Run Counter (On Hold)
-- [ ] Monthly Review (On Hold)
+- [ ] Weekly Mileage
+- [ ] Long Run Counter
+- [ ] Monthly Review
 
 ---
 
 ## Sprint 2.8 - Design Polish
 
-- [ ] Final Logo
-- [ ] Account Menu
-- [ ] Empty States
-- [ ] Loading States
-- [ ] Error States
-- [ ] Success Messages
-- [ ] Final Typography Polish
+- [x] Logo Polish
+- [x] Account Menu
+- [x] Empty States
+- [x] Loading States
+- [x] Error States
+- [x] Authentication UX
+- [x] Final Typography Polish
 
 ---
 
@@ -136,42 +136,69 @@
 
 ## Sprint 3.6 - Deployment
 
-- [ ] PostgreSQL
-- [ ] Database Migration
-- [ ] Environment Variables
-- [ ] Production Settings
-- [ ] Static Files
-- [ ] Backend Deployment
-- [ ] Frontend Deployment
-- [ ] Connect Frontend & Backend
-- [ ] Domain & HTTPS
-- [ ] Production Testing
+- [x] PostgreSQL
+- [x] Database Migration
+- [x] Environment Variables
+- [x] Production Settings
+- [x] Static Files
+- [x] Backend Deployment
+- [x] Frontend Deployment
+- [x] Connect Frontend and Backend
+- [x] HTTPS
+- [x] Production Testing
+- [ ] Custom Domain
+
+---
+
+## Sprint 3.7 - Production Polish
+
+- [x] Environment-specific Configuration
+- [x] API Base URL Configuration
+- [x] Gitignore Cleanup
+- [x] Login Loading State
+- [x] Registration Loading State
+- [x] User-friendly Authentication Errors
+- [x] CORS Configuration
+- [x] GitHub README
+- [x] First Public Deployment
+- [x] Version 1.0.0
 
 ---
 
 ## Sprint 4 - AI Companion
+
+### AI Foundation
+
+- [ ] AI Service Architecture
+- [ ] Prompt Design
+- [ ] User Data Context
+- [ ] AI Response Storage
+- [ ] Privacy and Usage Controls
+
+### AI Reflection
+
+- [ ] Monthly Reflection Summary
+- [ ] Gentle Training Insights
+- [ ] Reflection Prompts from History
 
 ### AI Planner
 
 - [ ] Suggested Monthly Plan
 - [ ] Beginner-friendly Goal Suggestions
 
-### AI Reflection
-
-- [ ] Monthly Reflection Summary
-- [ ] Gentle Training Insights
-
 ### AI Companion
 
 - [ ] Quiet Suggestions
-- [ ] Reflection Prompts from History
 - [ ] Monthly Conversation
+- [ ] Non-judgmental Response Guidelines
 
 ---
 
 ## Sprint 5 - Public Beta
 
 - [ ] Landing Page
+- [ ] Product Screenshots
+- [ ] Custom Domain
 - [ ] Invite Test Users
 - [ ] User Feedback
 - [ ] Bug Fixes
@@ -192,5 +219,3 @@
 - [ ] Password Reset
 - [ ] AI Plus Features
 - [ ] Public Release
-
----
