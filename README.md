@@ -1,10 +1,12 @@
 # Tsuki Run
 
-> A mindful running planner for runners who train with intention.
+> A mindful running planner with gentle AI guidance for runners who train with intention.
 
 Tsuki Run is a quiet digital running journal designed for runners who value consistency over perfection.
 
-Instead of chasing statistics or social competition, Tsuki Run encourages thoughtful planning, honest reflection, and long-term progress.
+Instead of chasing statistics or social competition, Tsuki Run encourages thoughtful planning, honest reflection, and long-term progress through mindful planning and gentle AI guidance.
+
+---
 
 ## Live App
 
@@ -29,6 +31,9 @@ Tsuki Run is designed to feel like opening a notebook, not launching an app.
 - Daily training planner
 - Running journal and reflections
 - Month-specific goals and entries
+- AI-powered Training Guide
+- Personalized training phases
+- Beginner, intermediate, and advanced guidance
 - Secure user authentication
 - User-specific cloud data
 - Responsive minimalist interface
@@ -51,6 +56,11 @@ Tsuki Run is designed to feel like opening a notebook, not launching an app.
 - Django REST Framework
 - PostgreSQL
 
+### AI
+
+- OpenAI GPT-5.6
+- Structured Outputs
+
 ### Authentication
 
 - JSON Web Tokens
@@ -66,28 +76,30 @@ Tsuki Run is designed to feel like opening a notebook, not launching an app.
 
 ## Project Status
 
-**Current version: v1.0.0**
+**Current version: v1.1.0**
 
-**Sprint 3.7 — Production Polish: Complete**
+**Sprint 4 — AI Training Guide: Complete**
 
-Completed:
+Completed
 
 - Monthly planner
 - Reflection journal
 - Monthly goal tracking
+- AI Training Guide
 - User registration and login
 - User-specific cloud data
-- Backend API deployment
-- Frontend production deployment
-- Production testing
+- Django REST API
+- PostgreSQL
+- OpenAI integration
+- Production deployment
 
-Next:
+Next
 
 - AI Reflection Companion
-- Gentle training insights
-- AI-assisted monthly planning
-- Landing page
-- Public beta
+- Monthly AI Summary
+- Calendar-aware AI
+- Landing Page
+- Public Beta
 
 ---
 
@@ -115,7 +127,9 @@ It is a personal space to:
 - reflect without judgment
 - notice progress over time
 
-The future AI companion will support reflection rather than act as a demanding coach.
+Tsuki Run now includes a gentle AI companion that helps runners prepare for their goals without pressure.
+
+Future AI features will focus on reflection, planning, and long-term consistency rather than performance optimization.
 
 ---
 

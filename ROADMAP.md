@@ -165,36 +165,45 @@
 
 ---
 
-## Sprint 4 - AI Companion
+## Sprint 4 - AI Training Guide
 
 ### AI Foundation
 
-- [ ] AI Service Architecture
-- [ ] Prompt Design
-- [ ] User Data Context
-- [ ] AI Response Storage
-- [ ] Privacy and Usage Controls
+- [x] OpenAI Integration
+- [x] AI Service Architecture
+- [x] Prompt Design
+- [x] Structured Outputs
+- [x] AI Response Storage
 
-### AI Reflection
+### Training Guide
 
-- [ ] Monthly Reflection Summary
-- [ ] Gentle Training Insights
-- [ ] Reflection Prompts from History
-
-### AI Planner
-
-- [ ] Suggested Monthly Plan
-- [ ] Beginner-friendly Goal Suggestions
-
-### AI Companion
-
-- [ ] Quiet Suggestions
-- [ ] Monthly Conversation
-- [ ] Non-judgmental Response Guidelines
+- [x] Training Guide Card
+- [x] Training Guide Modal
+- [x] Guide Generation
+- [x] Personalized Training Phases
+- [x] Beginner Support
+- [x] Intermediate Support
+- [x] Advanced Support
+- [x] View Guide
+- [x] Edit Guide
+- [x] Loading Experience
+- [x] Production Deployment
 
 ---
 
-## Sprint 5 - Public Beta
+## Sprint 5 - AI Reflection Companion
+
+- [ ] Monthly Reflection Summary
+- [ ] Calendar-aware AI
+- [ ] Gentle Training Insights
+- [ ] Reflection Prompts from History
+- [ ] Suggested Monthly Plan
+- [ ] Goal Suggestions
+- [ ] Monthly Conversation
+
+---
+
+## Sprint 6 - Public Beta
 
 - [ ] Landing Page
 - [ ] Product Screenshots
@@ -210,7 +219,7 @@
 
 ---
 
-## Sprint 6 - Official Launch
+## Sprint 7 - Official Launch
 
 - [ ] Beta Feedback Review
 - [ ] Premium Plan
