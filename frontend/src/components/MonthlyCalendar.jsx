@@ -27,6 +27,10 @@ import TrainingGuideModal from "./TrainingGuideModal";
 
 import TrainingGuideView from "./TrainingGuideView";
 
+import {
+  fetchTrainingGuides,
+} from "../api/trainingGuides";
+
 const DEFAULT_GOAL = {
   id: null,
   distance: 0,
@@ -131,13 +135,26 @@ export default function MonthlyCalendar() {
   useEffect(() => {
     const loadCalendarData = async () => {
       try {
-        const [entries, goals] = await Promise.all([
-          fetchEntries(),
-          fetchGoals(),
-        ]);
+        const [entries, goals, trainingGuides] =
+          await Promise.all([
+            fetchEntries(),
+            fetchGoals(),
+            fetchTrainingGuides(),
+          ]);
 
-        setEntriesByMonth(groupEntriesByMonth(entries));
-        setGoalsByMonth(groupGoalsByMonth(goals));
+        setEntriesByMonth(
+          groupEntriesByMonth(entries)
+        );
+
+        setGoalsByMonth(
+          groupGoalsByMonth(goals)
+        );
+
+        setTrainingGuide(
+          trainingGuides.length > 0
+            ? trainingGuides[0]
+            : null
+        );
       } catch (error) {
         console.error(
           "Unable to load Django calendar data:",
@@ -466,12 +483,14 @@ export default function MonthlyCalendar() {
 
       <TrainingGuideModal
         isOpen={showTrainingGuideModal}
+        guide={trainingGuide}
         onClose={() =>
           setShowTrainingGuideModal(false)
         }
         onSave={(guideData) => {
           setTrainingGuide(guideData);
           setShowTrainingGuideModal(false);
+          setShowTrainingGuideView(true);
         }}
       />
       

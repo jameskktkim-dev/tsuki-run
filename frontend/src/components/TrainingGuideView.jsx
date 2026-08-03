@@ -53,12 +53,76 @@ export default function TrainingGuideView({
           </div>
         </div>
 
-        <div className="training-guide-view-placeholder">
-          <p>Your guide will appear here.</p>
-          <p>
-            Next, Tsuki will use your running background
-            and goal to create a flexible training direction.
-          </p>
+        <div className="training-guide-view-content">
+          <section className="training-guide-view-section">
+            <p className="training-guide-view-section-label">
+              Starting Point
+            </p>
+
+            <p className="training-guide-view-copy">
+              {guide.guideContent?.summary}
+            </p>
+          </section>
+
+          <section className="training-guide-view-section">
+            <p className="training-guide-view-section-label">
+              Weekly Rhythm
+            </p>
+
+            <ul className="training-guide-view-list">
+              {guide.guideContent?.weeklyRhythm?.map(
+                (item, index) => (
+                  <li key={`${item}-${index}`}>
+                    {item}
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+
+          <section className="training-guide-view-section">
+            <p className="training-guide-view-section-label">
+              Training Phases
+            </p>
+
+            <div className="training-guide-phase-list">
+              {guide.guideContent?.phases?.map(
+                (phase, index) => (
+                  <article
+                    key={`${phase.title}-${index}`}
+                    className="training-guide-phase"
+                  >
+                    <div className="training-guide-phase-header">
+                      <h3>{phase.title}</h3>
+                      <span>{phase.duration}</span>
+                    </div>
+
+                    <p>{phase.description}</p>
+                  </article>
+                )
+              )}
+            </div>
+          </section>
+
+          <section className="training-guide-view-section">
+            <p className="training-guide-view-section-label">
+              Gentle Reminders
+            </p>
+
+            <ul className="training-guide-view-list">
+              {guide.guideContent?.gentleReminders?.map(
+                (item, index) => (
+                  <li key={`${item}-${index}`}>
+                    {item}
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+
+          <section className="training-guide-view-closing">
+            <p>{guide.guideContent?.closingThought}</p>
+          </section>
         </div>
 
         <button

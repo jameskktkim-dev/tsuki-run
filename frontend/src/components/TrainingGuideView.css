@@ -16,7 +16,7 @@
 .training-guide-view {
   position: relative;
 
-  width: min(680px, 100%);
+  width: min(760px, 100%);
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   box-sizing: border-box;
@@ -141,4 +141,118 @@
   .training-guide-view-summary {
     grid-template-columns: 1fr;
   }
+}
+
+.training-guide-view-content {
+  padding: var(--space-5) 0;
+}
+
+.training-guide-view-section {
+  margin-bottom: var(--space-5);
+}
+
+.training-guide-view-section-label {
+  margin: 0 0 var(--space-3);
+
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: var(--ink-muted);
+}
+
+.training-guide-view-copy {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+
+  color: var(--ink-soft);
+}
+
+.training-guide-view-list {
+  margin: 0;
+  padding-left: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+
+  color: var(--ink-soft);
+}
+
+.training-guide-phase-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.training-guide-phase {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.training-guide-phase:first-child {
+  padding-top: 0;
+}
+
+.training-guide-phase-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  margin-bottom: var(--space-2);
+}
+
+.training-guide-phase-header h3 {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 300;
+
+  color: var(--ink);
+}
+
+.training-guide-phase-header span {
+  flex-shrink: 0;
+
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: var(--ink-faint);
+}
+
+.training-guide-phase p {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+
+  color: var(--ink-soft);
+}
+
+.training-guide-view-closing {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.training-guide-view-closing p {
+  max-width: 580px;
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  font-style: italic;
+
+  color: var(--ink-muted);
 }

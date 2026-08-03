@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.utils import timezone
 from openai import OpenAI
 from pydantic import BaseModel
 
@@ -49,9 +50,27 @@ def generate_training_guide(guide):
         api_key=settings.OPENAI_API_KEY
     )
 
+    current_date = timezone.localdate()
+    days_until_goal = (
+        guide.goal_date - current_date
+    ).days
+
+    if days_until_goal <= 0:
+        raise ValueError(
+            "The goal date must be in the future."
+        )
+
+    weeks_until_goal = max(
+        1,
+        (days_until_goal + 6) // 7,
+    )
+
     runner_context = {
+        "currentDate": current_date.isoformat(),
         "trainingGoal": guide.training_goal,
         "goalDate": guide.goal_date.isoformat(),
+        "daysUntilGoal": days_until_goal,
+        "weeksUntilGoal": weeks_until_goal,
         "targetTime": guide.target_time,
         "longestRunKm": (
             float(guide.longest_run)
@@ -76,6 +95,23 @@ def generate_training_guide(guide):
     user_prompt = f"""
 Create a gentle training guide for this runner.
 
+The current date is {current_date.isoformat()}.
+The goal date is {guide.goal_date.isoformat()}.
+There are {days_until_goal} days, or approximately
+{weeks_until_goal} weeks, remaining.
+
+All training phases must:
+
+- begin on or after the current date
+- end on or before the goal date
+- use dates from the current year and goal year correctly
+- cover only the remaining time before the goal
+- appear in chronological order
+- avoid dates that are already in the past
+
+Do not invent an earlier training period.
+Do not create phases before {current_date.isoformat()}.
+
 Runner information:
 
 {json.dumps(runner_context, indent=2)}
@@ -84,10 +120,15 @@ Include:
 
 1. A brief description of the runner's starting point.
 2. A suggested weekly rhythm.
-3. Training phases from now until the goal date.
+3. Training phases covering the remaining time until the goal.
 4. General guidance for each phase.
 5. Gentle reminders about recovery and flexibility.
 6. A calm closing thought.
+
+Each phase duration should contain clear calendar dates,
+for example:
+
+"August 2 to August 23, 2026"
 
 Do not create a rigid day-by-day calendar.
 Do not guarantee the target time.

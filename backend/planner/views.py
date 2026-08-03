@@ -121,12 +121,10 @@ class GenerateTrainingGuideAPIView(
             user=request.user
         )
 
-        guide.guide_content = {
-            "content": generate_training_guide(
-                guide
-            )
-        }
-
+        guide.guide_content = generate_training_guide(
+            guide
+        )
+        
         guide.save()
 
         return Response(

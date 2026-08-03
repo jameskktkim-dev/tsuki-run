@@ -198,3 +198,58 @@
   background-repeat: no-repeat;
   background-position: right 14px center;
 }
+
+.training-guide-error {
+  margin: var(--space-3) 0 0;
+
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.6;
+
+  color: rgba(120, 45, 38, 0.9);
+}
+
+.training-guide-save-button:disabled,
+.training-guide-close-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.training-guide-status {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.training-guide-status-title {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.6;
+
+  color: var(--ink);
+}
+
+.training-guide-status-copy {
+  margin: var(--space-3) 0 0;
+
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+
+  color: var(--ink-muted);
+}
+
+.training-guide-status-note {
+  margin: var(--space-2) 0 0;
+
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+
+  color: var(--ink-faint);
+}
