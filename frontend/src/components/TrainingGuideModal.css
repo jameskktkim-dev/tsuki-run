@@ -1,0 +1,200 @@
+.training-guide-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-4);
+  background: rgba(31, 28, 26, 0.28);
+  backdrop-filter: blur(2px);
+}
+
+.training-guide-modal {
+  position: relative;
+  width: min(470px, 100%);
+  box-sizing: border-box;
+
+  padding: var(--space-5);
+
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.1),
+    0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.training-guide-close-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  color: var(--ink-light);
+
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: color 0.15s ease;
+}
+
+.training-guide-close-button:hover {
+  color: var(--ink);
+}
+
+.training-guide-close-button:focus-visible {
+  outline: 1px solid var(--ink-muted);
+  outline-offset: 3px;
+}
+
+.training-guide-title {
+  margin: 0 0 var(--space-5);
+  padding-right: var(--space-4);
+
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+
+  color: var(--ink);
+}
+
+.training-guide-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-3);
+}
+
+.training-guide-form-group label {
+  font-size: 11px;
+  font-weight: 300;
+
+  color: var(--ink-light);
+}
+
+.training-guide-form-group input,
+.training-guide-form-group select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+
+  background: rgba(255, 253, 248, 0.55);
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 300;
+
+  color: var(--ink);
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.training-guide-form-group input:focus,
+.training-guide-form-group select:focus {
+  border-color: var(--ink-muted);
+  background: rgba(255, 253, 248, 0.9);
+}
+
+.training-guide-input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.training-guide-input-row input {
+  flex: 1;
+}
+
+.training-guide-input-row span {
+  flex-shrink: 0;
+
+  font-size: 12px;
+  font-weight: 300;
+
+  color: var(--ink-light);
+}
+
+.training-guide-button-row {
+  margin-top: var(--space-4);
+}
+
+.training-guide-save-button {
+  width: 100%;
+
+  padding: 11px;
+
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+
+  background: var(--ink);
+  color: var(--paper);
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 300;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.training-guide-save-button:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.training-guide-save-button:active {
+  transform: translateY(1px);
+}
+
+.training-guide-modal {
+  width: min(560px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.training-guide-pb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+
+.training-guide-form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 42px;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236c655e' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}

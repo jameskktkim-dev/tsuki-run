@@ -33,8 +33,8 @@
 .app-utility {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  justify-content: flex-start;
+  margin-bottom: 18px;
 }
 
 .app-logout {
@@ -62,13 +62,14 @@
 
 .app-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+
   padding-bottom: var(--space-4);
   margin-bottom: 0;
+
   border-bottom: 1px solid var(--line-strong);
 }
-
 .app-logo {
   display: block;
   width: 330px;

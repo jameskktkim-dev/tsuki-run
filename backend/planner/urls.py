@@ -6,7 +6,11 @@ from .views import (
     MonthlyGoalListCreateAPIView,
     MonthlyGoalRetrieveUpdateDestroyAPIView,
     RegisterAPIView,
+    TrainingGuideListCreateAPIView,
+    TrainingGuideRetrieveUpdateDestroyAPIView,
+    GenerateTrainingGuideAPIView,
 )
+
 
 urlpatterns = [
     path(
@@ -33,5 +37,20 @@ urlpatterns = [
         "monthly-goals/<int:pk>/",
         MonthlyGoalRetrieveUpdateDestroyAPIView.as_view(),
         name="monthly-goal-detail",
+    ),
+    path(
+        "training-guides/",
+        TrainingGuideListCreateAPIView.as_view(),
+        name="training-guide-list-create",
+    ),
+    path(
+        "training-guides/<int:pk>/",
+        TrainingGuideRetrieveUpdateDestroyAPIView.as_view(),
+        name="training-guide-detail",
+    ),
+    path(
+        "training-guides/generate/",
+        GenerateTrainingGuideAPIView.as_view(),
+        name="training-guide-generate",
     ),
 ]

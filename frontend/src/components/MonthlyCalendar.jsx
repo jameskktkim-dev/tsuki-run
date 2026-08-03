@@ -21,6 +21,12 @@ import DayCell from "./DayCell";
 
 import "./MonthlyCalendar.css";
 
+import TrainingGuideCard from "./TrainingGuideCard";
+
+import TrainingGuideModal from "./TrainingGuideModal";
+
+import TrainingGuideView from "./TrainingGuideView";
+
 const DEFAULT_GOAL = {
   id: null,
   distance: 0,
@@ -90,11 +96,27 @@ const groupGoalsByMonth = (goals) => {
 };
 
 export default function MonthlyCalendar() {
-  const [entriesByMonth, setEntriesByMonth] = useState({});
-  const [goalsByMonth, setGoalsByMonth] = useState({});
+  const [entriesByMonth, setEntriesByMonth] =
+    useState({});
+  const [goalsByMonth, setGoalsByMonth] =
+    useState({});
 
-  const [selectedDay, setSelectedDay] = useState(null);
-  const [showGoalModal, setShowGoalModal] = useState(false);
+  const [selectedDay, setSelectedDay] =
+    useState(null);
+
+  const [showGoalModal, setShowGoalModal] =
+    useState(false);
+
+  const [
+    showTrainingGuideModal,
+    setShowTrainingGuideModal,
+  ] = useState(false);
+
+  const [trainingGuide, setTrainingGuide] =
+    useState(null);
+
+  const [showTrainingGuideView, setShowTrainingGuideView] =
+    useState(false);
 
   const [currentDate, setCurrentDate] = useState(() => {
     const today = new Date();
@@ -409,6 +431,17 @@ export default function MonthlyCalendar() {
         </div>
       </div>
 
+      <TrainingGuideCard
+        hasGuide={trainingGuide !== null}
+        onOpen={() => {
+          if (trainingGuide) {
+            setShowTrainingGuideView(true);
+            return;
+          }
+
+          setShowTrainingGuideModal(true);
+        }}
+      />
       <ReflectionTimeline
         entries={monthEntries}
         monthName={monthName}
@@ -429,6 +462,28 @@ export default function MonthlyCalendar() {
         goal={currentGoal}
         onClose={() => setShowGoalModal(false)}
         onSave={handleSaveGoal}
+      />
+
+      <TrainingGuideModal
+        isOpen={showTrainingGuideModal}
+        onClose={() =>
+          setShowTrainingGuideModal(false)
+        }
+        onSave={(guideData) => {
+          setTrainingGuide(guideData);
+          setShowTrainingGuideModal(false);
+        }}
+      />
+      
+      <TrainingGuideView
+        guide={showTrainingGuideView ? trainingGuide : null}
+        onClose={() =>
+          setShowTrainingGuideView(false)
+        }
+        onEdit={() => {
+          setShowTrainingGuideView(false);
+          setShowTrainingGuideModal(true);
+        }}
       />
     </div>
   );

@@ -82,17 +82,17 @@ export default function App() {
 
   return (
     <main className="app-shell">
-      <div className="app-utility">
-        <button
-          type="button"
-          className="app-logout"
-          onClick={handleLogout}
-        >
-          Log out
-        </button>
-      </div>
-
       <header className="app-header">
+        <div className="app-utility">
+          <button
+            type="button"
+            className="app-logout"
+            onClick={handleLogout}
+          >
+            Log out
+          </button>
+        </div>
+
         <img
           src={tsukiLogo}
           alt="Tsuki Run"

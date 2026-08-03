@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Entry, MonthlyGoal
+from .models import Entry, MonthlyGoal, TrainingGuide
 
 
 class EntrySerializer(serializers.ModelSerializer):
@@ -92,6 +92,101 @@ class MonthlyGoalSerializer(serializers.ModelSerializer):
         read_only_fields = [
             "id",
             "user",
+            "createdAt",
+            "updatedAt",
+        ]
+
+
+class TrainingGuideSerializer(serializers.ModelSerializer):
+    trainingGoal = serializers.CharField(
+        source="training_goal",
+    )
+
+    goalDate = serializers.DateField(
+        source="goal_date",
+    )
+
+    targetTime = serializers.CharField(
+        source="target_time",
+    )
+
+    longestRun = serializers.DecimalField(
+        source="longest_run",
+        max_digits=6,
+        decimal_places=2,
+        required=False,
+        allow_null=True,
+    )
+
+    weeklyDistance = serializers.DecimalField(
+        source="weekly_distance",
+        max_digits=6,
+        decimal_places=2,
+        required=False,
+        allow_null=True,
+    )
+
+    pb5k = serializers.CharField(
+        source="pb_5k",
+        required=False,
+        allow_blank=True,
+    )
+
+    pb10k = serializers.CharField(
+        source="pb_10k",
+        required=False,
+        allow_blank=True,
+    )
+
+    pbHalfMarathon = serializers.CharField(
+        source="pb_half_marathon",
+        required=False,
+        allow_blank=True,
+    )
+
+    pbMarathon = serializers.CharField(
+        source="pb_marathon",
+        required=False,
+        allow_blank=True,
+    )
+
+    guideContent = serializers.JSONField(
+        source="guide_content",
+        read_only=True,
+    )
+
+    createdAt = serializers.DateTimeField(
+        source="created_at",
+        read_only=True,
+    )
+
+    updatedAt = serializers.DateTimeField(
+        source="updated_at",
+        read_only=True,
+    )
+
+    class Meta:
+        model = TrainingGuide
+        fields = [
+            "id",
+            "user",
+            "trainingGoal",
+            "goalDate",
+            "targetTime",
+            "longestRun",
+            "weeklyDistance",
+            "pb5k",
+            "pb10k",
+            "pbHalfMarathon",
+            "pbMarathon",
+            "guideContent",
+            "createdAt",
+            "updatedAt",
+        ]
+        read_only_fields = [
+            "id",
+            "user",
+            "guideContent",
             "createdAt",
             "updatedAt",
         ]
