@@ -10,22 +10,39 @@ export default function TrainingGuideModal({
 }) {
   const [trainingGoal, setTrainingGoal] =
     useState("Marathon");
-  const [goalDate, setGoalDate] = useState("");
-  const [targetTime, setTargetTime] = useState("");
-  const [longestRun, setLongestRun] = useState("");
+
+  const [goalDate, setGoalDate] =
+    useState("");
+
+  const [targetTime, setTargetTime] =
+    useState("");
+
+  const [longestRun, setLongestRun] =
+    useState("");
+
   const [weeklyDistance, setWeeklyDistance] =
     useState("");
 
-  const [pb5k, setPb5k] = useState("");
-  const [pb10k, setPb10k] = useState("");
-  const [pbHalf, setPbHalf] = useState("");
+  const [pb5k, setPb5k] =
+    useState("");
+
+  const [pb10k, setPb10k] =
+    useState("");
+
+  const [pbHalf, setPbHalf] =
+    useState("");
+
   const [pbMarathon, setPbMarathon] =
     useState("");
 
   const [isGenerating, setIsGenerating] =
     useState(false);
-  const [isReady, setIsReady] = useState(false);
-  const [error, setError] = useState("");
+
+  const [isReady, setIsReady] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
 
   useEffect(() => {
     if (!isOpen) return;
@@ -33,8 +50,14 @@ export default function TrainingGuideModal({
     setTrainingGoal(
       guide?.trainingGoal ?? "Marathon"
     );
-    setGoalDate(guide?.goalDate ?? "");
-    setTargetTime(guide?.targetTime ?? "");
+
+    setGoalDate(
+      guide?.goalDate ?? ""
+    );
+
+    setTargetTime(
+      guide?.targetTime ?? ""
+    );
 
     setLongestRun(
       guide?.longestRun === null ||
@@ -50,10 +73,21 @@ export default function TrainingGuideModal({
         : String(guide.weeklyDistance)
     );
 
-    setPb5k(guide?.pb5k ?? "");
-    setPb10k(guide?.pb10k ?? "");
-    setPbHalf(guide?.pbHalfMarathon ?? "");
-    setPbMarathon(guide?.pbMarathon ?? "");
+    setPb5k(
+      guide?.pb5k ?? ""
+    );
+
+    setPb10k(
+      guide?.pb10k ?? ""
+    );
+
+    setPbHalf(
+      guide?.pbHalfMarathon ?? ""
+    );
+
+    setPbMarathon(
+      guide?.pbMarathon ?? ""
+    );
 
     setError("");
     setIsGenerating(false);
@@ -77,18 +111,43 @@ export default function TrainingGuideModal({
       return;
     }
 
+    const normalizedTargetTime =
+      targetTime.trim();
+
+    const isFinish =
+      normalizedTargetTime.toLowerCase() ===
+      "finish";
+
+    const isValidTime =
+      /^(\d{1,2}):([0-5]\d)(:([0-5]\d))?$/.test(
+        normalizedTargetTime
+      );
+
+    if (!isFinish && !isValidTime) {
+      setError(
+        "Please enter a time like 1:00, 1:00:00, or Finish."
+      );
+      return;
+    }
+
     const guideData = {
       trainingGoal,
       goalDate,
-      targetTime: targetTime.trim(),
+
+      targetTime: isFinish
+        ? "Finish"
+        : normalizedTargetTime,
+
       longestRun:
         longestRun === ""
           ? null
           : Number(longestRun),
+
       weeklyDistance:
         weeklyDistance === ""
           ? null
           : Number(weeklyDistance),
+
       pb5k: pb5k.trim(),
       pb10k: pb10k.trim(),
       pbHalfMarathon: pbHalf.trim(),
@@ -101,13 +160,18 @@ export default function TrainingGuideModal({
       setIsReady(false);
 
       const generatedGuide =
-        await generateTrainingGuide(guideData);
+        await generateTrainingGuide(
+          guideData
+        );
 
       setIsGenerating(false);
       setIsReady(true);
 
       await new Promise((resolve) => {
-        window.setTimeout(resolve, 1800);
+        window.setTimeout(
+          resolve,
+          1800
+        );
       });
 
       onSave(generatedGuide);
@@ -126,7 +190,8 @@ export default function TrainingGuideModal({
     }
   };
 
-  const isProcessing = isGenerating || isReady;
+  const isProcessing =
+    isGenerating || isReady;
 
   return (
     <div className="training-guide-backdrop">
@@ -184,11 +249,18 @@ export default function TrainingGuideModal({
                   )
                 }
               >
-                <option value="5K">5K</option>
-                <option value="10K">10K</option>
+                <option value="5K">
+                  5K
+                </option>
+
+                <option value="10K">
+                  10K
+                </option>
+
                 <option value="Half Marathon">
                   Half Marathon
                 </option>
+
                 <option value="Marathon">
                   Marathon
                 </option>
@@ -205,7 +277,9 @@ export default function TrainingGuideModal({
                 type="date"
                 value={goalDate}
                 onChange={(event) =>
-                  setGoalDate(event.target.value)
+                  setGoalDate(
+                    event.target.value
+                  )
                 }
               />
             </div>
@@ -221,7 +295,9 @@ export default function TrainingGuideModal({
                 placeholder="HH:MM:SS or Finish"
                 value={targetTime}
                 onChange={(event) =>
-                  setTargetTime(event.target.value)
+                  setTargetTime(
+                    event.target.value
+                  )
                 }
               />
             </div>
@@ -251,8 +327,8 @@ export default function TrainingGuideModal({
 
             <div className="training-guide-form-group">
               <label htmlFor="weekly-distance">
-                Average Weekly Distance (last 4
-                weeks)
+                Average Weekly Distance
+                (last 4 weeks)
               </label>
 
               <div className="training-guide-input-row">
@@ -273,10 +349,14 @@ export default function TrainingGuideModal({
               </div>
             </div>
 
-            <h3>Personal Bests (Optional)</h3>
+            <h3>
+              Personal Bests (Optional)
+            </h3>
 
             <div className="training-guide-form-group">
-              <label htmlFor="pb-5k">5K</label>
+              <label htmlFor="pb-5k">
+                5K
+              </label>
 
               <input
                 id="pb-5k"
@@ -284,13 +364,17 @@ export default function TrainingGuideModal({
                 placeholder="HH:MM:SS"
                 value={pb5k}
                 onChange={(event) =>
-                  setPb5k(event.target.value)
+                  setPb5k(
+                    event.target.value
+                  )
                 }
               />
             </div>
 
             <div className="training-guide-form-group">
-              <label htmlFor="pb-10k">10K</label>
+              <label htmlFor="pb-10k">
+                10K
+              </label>
 
               <input
                 id="pb-10k"
@@ -298,7 +382,9 @@ export default function TrainingGuideModal({
                 placeholder="HH:MM:SS"
                 value={pb10k}
                 onChange={(event) =>
-                  setPb10k(event.target.value)
+                  setPb10k(
+                    event.target.value
+                  )
                 }
               />
             </div>
@@ -314,7 +400,9 @@ export default function TrainingGuideModal({
                 placeholder="HH:MM:SS"
                 value={pbHalf}
                 onChange={(event) =>
-                  setPbHalf(event.target.value)
+                  setPbHalf(
+                    event.target.value
+                  )
                 }
               />
             </div>

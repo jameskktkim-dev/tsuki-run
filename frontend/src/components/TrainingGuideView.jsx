@@ -97,7 +97,37 @@ export default function TrainingGuideView({
                       <span>{phase.duration}</span>
                     </div>
 
-                    <p>{phase.description}</p>
+                    <div className="training-guide-phase-details">
+                      <div>
+                        <span>Weekly Distance</span>
+                        <p>{phase.weeklyDistance}</p>
+                      </div>
+
+                      <div>
+                        <span>Runs Per Week</span>
+                        <p>{phase.runsPerWeek}</p>
+                      </div>
+
+                      <div>
+                        <span>Easy Running</span>
+                        <p>{phase.easyRunning}</p>
+                      </div>
+
+                      <div>
+                        <span>Key Run</span>
+                        <p>{phase.keyRun}</p>
+                      </div>
+
+                      <div>
+                        <span>Long Run</span>
+                        <p>{phase.longRun}</p>
+                      </div>
+
+                      <div>
+                        <span>Focus</span>
+                        <p>{phase.focus}</p>
+                      </div>
+                    </div>
                   </article>
                 )
               )}

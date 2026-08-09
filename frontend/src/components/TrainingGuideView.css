@@ -137,11 +137,6 @@
   color: var(--ink);
 }
 
-@media (max-width: 640px) {
-  .training-guide-view-summary {
-    grid-template-columns: 1fr;
-  }
-}
 
 .training-guide-view-content {
   padding: var(--space-5) 0;
@@ -255,4 +250,101 @@
   font-style: italic;
 
   color: var(--ink-muted);
+}
+
+.training-guide-phase-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.training-guide-phase-details div {
+  min-width: 0;
+}
+
+.training-guide-phase-details span {
+  display: block;
+  margin-bottom: var(--space-1);
+
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: var(--ink-faint);
+}
+
+.training-guide-phase-details p {
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .training-guide-view-backdrop {
+    align-items: stretch;
+    padding: var(--space-2);
+  }
+
+  .training-guide-view {
+    width: 100%;
+    max-height: calc(100vh - 16px);
+    padding: var(--space-4) var(--space-3);
+    border-radius: 6px;
+  }
+
+  .training-guide-view-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .training-guide-view-title {
+    margin-bottom: var(--space-4);
+    font-size: 26px;
+  }
+
+  .training-guide-view-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    padding-bottom: var(--space-4);
+  }
+
+  .training-guide-view-content {
+    padding: var(--space-4) 0;
+  }
+
+  .training-guide-view-section {
+    margin-bottom: var(--space-4);
+  }
+
+  .training-guide-view-copy,
+  .training-guide-view-list,
+  .training-guide-phase-details p,
+  .training-guide-view-closing p {
+    overflow-wrap: anywhere;
+  }
+
+  .training-guide-phase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .training-guide-phase-header span {
+    white-space: normal;
+  }
+
+  .training-guide-phase-details {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .training-guide-view-closing p {
+    max-width: 100%;
+  }
 }

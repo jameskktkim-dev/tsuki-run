@@ -9,7 +9,12 @@ from pydantic import BaseModel
 class TrainingPhase(BaseModel):
     title: str
     duration: str
-    description: str
+    weeklyDistance: str
+    runsPerWeek: str
+    easyRunning: str
+    keyRun: str
+    longRun: str
+    focus: str
 
 
 class TrainingGuideOutput(BaseModel):
@@ -23,11 +28,16 @@ class TrainingGuideOutput(BaseModel):
 SYSTEM_PROMPT = """
 You are the AI companion inside Tsuki Run.
 
-Tsuki Run is a quiet running journal.
+Tsuki Run is a quiet running journal and mindful running planner.
 You are not a strict coach.
 
-Create a gentle, flexible training guide based only on the
-runner information provided.
+Create a gentle, flexible, but practical training guide based only
+on the runner information provided.
+
+Gentle does not mean vague.
+
+The runner should finish reading the guide with a clear sense of
+what they could reasonably try during each training phase.
 
 Do not shame, pressure, or guarantee results.
 Do not diagnose injuries.
@@ -35,8 +45,22 @@ Do not describe the guide as something the runner must follow.
 
 Use calm, practical, and supportive language.
 
-The guide should reduce uncertainty while leaving the runner
-free to adjust it around everyday life.
+Give specific distances, run frequency, workout examples, and pace
+ranges when the runner's data supports them.
+
+When the runner has a time goal, calculate the approximate goal pace
+and use it as a reference when appropriate.
+
+Do not force pace recommendations when the runner only wants to finish
+or when their current data does not support a useful pace estimate.
+
+Present numbers as flexible ranges or suggestions rather than strict
+requirements.
+
+Do not create a rigid day-by-day calendar.
+
+The guide should reduce uncertainty while leaving the runner free to
+adjust it around everyday life.
 """
 
 
@@ -51,6 +75,7 @@ def generate_training_guide(guide):
     )
 
     current_date = timezone.localdate()
+
     days_until_goal = (
         guide.goal_date - current_date
     ).days
@@ -93,7 +118,7 @@ def generate_training_guide(guide):
     }
 
     user_prompt = f"""
-Create a gentle training guide for this runner.
+Create a gentle but actionable training guide for this runner.
 
 The current date is {current_date.isoformat()}.
 The goal date is {guide.goal_date.isoformat()}.
@@ -104,35 +129,81 @@ All training phases must:
 
 - begin on or after the current date
 - end on or before the goal date
-- use dates from the current year and goal year correctly
-- cover only the remaining time before the goal
+- cover only the remaining training period
 - appear in chronological order
-- avoid dates that are already in the past
-
-Do not invent an earlier training period.
-Do not create phases before {current_date.isoformat()}.
+- use practical recommendations appropriate to the runner's current level
 
 Runner information:
 
 {json.dumps(runner_context, indent=2)}
 
-Include:
+The guide must include:
 
-1. A brief description of the runner's starting point.
-2. A suggested weekly rhythm.
-3. Training phases covering the remaining time until the goal.
-4. General guidance for each phase.
-5. Gentle reminders about recovery and flexibility.
-6. A calm closing thought.
+1. Starting Point
+Explain the runner's current training base and how it relates to the goal.
 
-Each phase duration should contain clear calendar dates,
-for example:
+2. Weekly Rhythm
+Give a simple overall rhythm for the week.
 
-"August 2 to August 23, 2026"
+3. Training Phases
+For every phase, provide:
+
+- title
+- calendar duration
+- suggested weekly distance range
+- suggested number of runs per week
+- easy-running guidance
+- one specific key workout or training stimulus
+- long-run distance or progression
+- the main focus of the phase
+
+The recommendations should be specific enough that the runner can answer:
+
+"What should I roughly try to do this week?"
+
+Examples of useful guidance:
+
+- "Aim for roughly 12-15 km per week across 3 runs."
+- "Try one 4 km run including 2 km around 6:15-6:30/km."
+- "Build the long run gradually from 5 km toward 7 km."
+- "Keep easy runs around conversational effort."
+
+When a time goal is provided:
+
+- calculate the approximate goal pace
+- use that pace to inform relevant training recommendations
+- do not suggest that every run should be completed at goal pace
+- introduce goal-pace work gradually when appropriate
+
+When the target is "Finish":
+
+- prioritize consistency, distance, effort, and time on feet
+- do not invent unnecessary pace targets
+- run-walk recommendations are welcome when appropriate
+
+For beginner runners:
+
+- keep progression conservative
+- prioritize consistency before intensity
+- avoid aggressive increases in weekly distance
+- use simple workouts that are easy to understand
+
+For experienced runners:
+
+- recommendations may include more specific pace ranges,
+  threshold work, marathon effort, intervals, or structured long runs
+  when supported by their training history
+
+4. Gentle Reminders
+Give practical reminders about flexibility, recovery, and adapting the guide.
+
+5. Closing Thought
+End with a calm, concise reflection.
 
 Do not create a rigid day-by-day calendar.
 Do not guarantee the target time.
 Do not invent personal information.
+Do not make every phase sound generic.
 """
 
     response = client.responses.parse(
