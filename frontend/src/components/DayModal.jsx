@@ -30,7 +30,9 @@ export default function DayModal({
   if (!selectedDay) return null;
 
   const reflectionPrompt =
-    reflectionPrompts[(selectedDay - 1) % reflectionPrompts.length];
+    reflectionPrompts[
+      (selectedDay - 1) % reflectionPrompts.length
+    ];
 
   const handleSave = () => {
     onSave({
@@ -66,25 +68,48 @@ export default function DayModal({
         <h3>Plan</h3>
 
         <div className="form-group">
-          <label htmlFor="plan-type">Training Type</label>
+          <label htmlFor="plan-type">
+            Training Type
+          </label>
 
           <select
             id="plan-type"
             value={planType}
-            onChange={(event) => setPlanType(event.target.value)}
+            onChange={(event) =>
+              setPlanType(event.target.value)
+            }
           >
-            <option value="">Select training type</option>
-            <option value="Easy Run">Easy Run</option>
-            <option value="Long Run">Long Run</option>
-            <option value="Tempo">Tempo</option>
-            <option value="Intervals">Intervals</option>
-            <option value="Race">Race</option>
-            <option value="Rest">Rest</option>
+            <option value="">
+              Select training type
+            </option>
+            <option value="Easy Run">
+              Easy Run
+            </option>
+            <option value="Long Run">
+              Long Run
+            </option>
+            <option value="Tempo">
+              Tempo
+            </option>
+            <option value="Intervals">
+              Intervals
+            </option>
+            <option value="Hill Run">
+              Hill Run
+            </option>
+            <option value="Cross Training">
+              Cross Training
+            </option>
+            <option value="Race">
+              Race
+            </option>
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="plan-distance">Planned Distance</label>
+          <label htmlFor="plan-distance">
+            Planned Distance
+          </label>
 
           <div className="distance-row">
             <input
@@ -93,7 +118,11 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={planDistance}
-              onChange={(event) => setPlanDistance(event.target.value)}
+              onChange={(event) =>
+                setPlanDistance(
+                  event.target.value
+                )
+              }
               placeholder="0"
             />
 
@@ -104,25 +133,48 @@ export default function DayModal({
         <h3>Result</h3>
 
         <div className="form-group">
-          <label htmlFor="result-type">Training Type</label>
+          <label htmlFor="result-type">
+            Training Type
+          </label>
 
           <select
             id="result-type"
             value={resultType}
-            onChange={(event) => setResultType(event.target.value)}
+            onChange={(event) =>
+              setResultType(event.target.value)
+            }
           >
-            <option value="">Select training type</option>
-            <option value="Easy Run">Easy Run</option>
-            <option value="Long Run">Long Run</option>
-            <option value="Tempo">Tempo</option>
-            <option value="Intervals">Intervals</option>
-            <option value="Race">Race</option>
-            <option value="Rest">Rest</option>
+            <option value="">
+              Select training type
+            </option>
+            <option value="Easy Run">
+              Easy Run
+            </option>
+            <option value="Long Run">
+              Long Run
+            </option>
+            <option value="Tempo">
+              Tempo
+            </option>
+            <option value="Intervals">
+              Intervals
+            </option>
+            <option value="Hill Run">
+              Hill Run
+            </option>
+            <option value="Cross Training">
+              Cross Training
+            </option>
+            <option value="Race">
+              Race
+            </option>
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="result-distance">Actual Distance</label>
+          <label htmlFor="result-distance">
+            Actual Distance
+          </label>
 
           <div className="distance-row">
             <input
@@ -131,7 +183,11 @@ export default function DayModal({
               min="0"
               step="0.1"
               value={resultDistance}
-              onChange={(event) => setResultDistance(event.target.value)}
+              onChange={(event) =>
+                setResultDistance(
+                  event.target.value
+                )
+              }
               placeholder="0"
             />
 
@@ -150,7 +206,9 @@ export default function DayModal({
 
           <textarea
             value={reflection}
-            onChange={(event) => setReflection(event.target.value)}
+            onChange={(event) =>
+              setReflection(event.target.value)
+            }
             placeholder="Write a quiet note..."
             aria-label="Reflection"
           />

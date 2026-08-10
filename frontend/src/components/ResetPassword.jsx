@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { login } from "../api/auth";
+import { confirmPasswordReset } from "../api/auth";
 import tsukiLogo from "../assets/tsuki-run-logo.svg";
 import "./Login.css";
 
-export default function Login({
-  onLogin,
-  onShowRegister,
-  onShowForgotPassword,
+export default function ResetPassword({
+  uid,
+  token,
+  onBackToLogin,
 }) {
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
+
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] =
     useState(false);
@@ -18,38 +21,43 @@ export default function Login({
     event.preventDefault();
 
     setError("");
+    setMessage("");
+
+    if (password.length < 8) {
+      setError(
+        "Password must be at least 8 characters."
+      );
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError(
+        "Passwords do not match."
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      await login(
-        username.trim(),
+      const data = await confirmPasswordReset(
+        uid,
+        token,
         password
       );
 
-      onLogin();
-    } catch (requestError) {
-      const message =
-        requestError.message?.toLowerCase() ?? "";
+      setMessage(
+        data.detail ||
+          "Your password has been reset."
+      );
 
-      if (
-        message.includes("401") ||
-        message.includes("invalid")
-      ) {
-        setError(
-          "Incorrect username or password."
-        );
-      } else if (
-        message.includes("network") ||
-        message.includes("fetch")
-      ) {
-        setError(
-          "Unable to connect to the server. Please try again."
-        );
-      } else {
-        setError(
-          "Something went wrong. Please try again."
-        );
-      }
+      setPassword("");
+      setConfirmPassword("");
+    } catch (requestError) {
+      setError(
+        requestError.message ||
+          "Unable to reset your password."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -69,16 +77,16 @@ export default function Login({
         <div className="auth-content">
           <header className="auth-header">
             <p className="auth-eyebrow">
-              Your running journal
+              Account recovery
             </p>
 
             <h1 className="auth-title">
-              Welcome back.
+              Choose a new password.
             </h1>
 
             <p className="auth-description">
-              Return to your plans, runs, and
-              reflections.
+              Enter a new password for your
+              Tsuki Run account.
             </p>
           </header>
 
@@ -88,18 +96,16 @@ export default function Login({
           >
             <label className="auth-field">
               <span className="auth-label">
-                Username
+                New Password
               </span>
 
               <input
-                type="text"
-                value={username}
+                type="password"
+                value={password}
                 onChange={(event) =>
-                  setUsername(
-                    event.target.value
-                  )
+                  setPassword(event.target.value)
                 }
-                autoComplete="username"
+                autoComplete="new-password"
                 disabled={isSubmitting}
                 required
               />
@@ -107,32 +113,28 @@ export default function Login({
 
             <label className="auth-field">
               <span className="auth-label">
-                Password
+                Confirm Password
               </span>
 
               <input
                 type="password"
-                value={password}
+                value={confirmPassword}
                 onChange={(event) =>
-                  setPassword(
+                  setConfirmPassword(
                     event.target.value
                   )
                 }
-                autoComplete="current-password"
+                autoComplete="new-password"
                 disabled={isSubmitting}
                 required
               />
             </label>
 
-            <div className="auth-forgot">
-              <button
-                type="button"
-                onClick={onShowForgotPassword}
-                disabled={isSubmitting}
-              >
-                Forgot password?
-              </button>
-            </div>
+            {message && (
+              <p className="auth-success">
+                {message}
+              </p>
+            )}
 
             {error && (
               <p className="auth-error">
@@ -146,22 +148,18 @@ export default function Login({
               disabled={isSubmitting}
             >
               {isSubmitting
-                ? "Signing in…"
-                : "Sign in"}
+                ? "Resetting…"
+                : "Reset password"}
             </button>
           </form>
 
           <div className="auth-switch">
-            <span>
-              New to Tsuki Run?
-            </span>
-
             <button
               type="button"
-              onClick={onShowRegister}
+              onClick={onBackToLogin}
               disabled={isSubmitting}
             >
-              Create an account
+              Back to sign in
             </button>
           </div>
         </div>

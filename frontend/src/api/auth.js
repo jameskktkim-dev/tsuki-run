@@ -167,3 +167,61 @@ export async function authFetch(url, options = {}) {
 
   return response;
 }
+
+export async function requestPasswordReset(email) {
+  const response = await fetch(
+    `${API_BASE_URL}/password-reset/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const message = await parseError(
+      response,
+      "Unable to send password reset email."
+    );
+
+    throw new Error(message);
+  }
+
+  return response.json();
+}
+
+export async function confirmPasswordReset(
+  uid,
+  token,
+  newPassword
+) {
+  const response = await fetch(
+    `${API_BASE_URL}/password-reset/confirm/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid,
+        token,
+        newPassword,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const message = await parseError(
+      response,
+      "Unable to reset your password."
+    );
+
+    throw new Error(message);
+  }
+
+  return response.json();
+}

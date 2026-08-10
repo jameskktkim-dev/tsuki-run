@@ -3,12 +3,14 @@ from django.urls import path
 from .views import (
     EntryListCreateAPIView,
     EntryRetrieveUpdateDestroyAPIView,
+    GenerateTrainingGuideAPIView,
     MonthlyGoalListCreateAPIView,
     MonthlyGoalRetrieveUpdateDestroyAPIView,
+    PasswordResetRequestAPIView,
     RegisterAPIView,
     TrainingGuideListCreateAPIView,
     TrainingGuideRetrieveUpdateDestroyAPIView,
-    GenerateTrainingGuideAPIView,
+    PasswordResetConfirmAPIView,
 )
 
 
@@ -17,6 +19,16 @@ urlpatterns = [
         "register/",
         RegisterAPIView.as_view(),
         name="register",
+    ),
+    path(
+        "password-reset/",
+        PasswordResetRequestAPIView.as_view(),
+        name="password-reset",
+    ),
+    path(
+        "password-reset/confirm/",
+        PasswordResetConfirmAPIView.as_view(),
+        name="password-reset-confirm",
     ),
     path(
         "entries/",

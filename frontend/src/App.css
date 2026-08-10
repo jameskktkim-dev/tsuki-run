@@ -25,9 +25,35 @@
 }
 
 .app-shell {
+  position: relative;
+  z-index: 0;
+
   max-width: 1180px;
   margin: 0 auto;
   padding: 32px 36px var(--space-7);
+}
+
+.app-shell::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background-color: var(--paper);
+
+  background-image:
+    linear-gradient(
+      rgba(47, 43, 40, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(47, 43, 40, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
 }
 
 .app-utility {
@@ -50,6 +76,7 @@
   text-transform: uppercase;
   color: rgba(47, 43, 40, 0.46);
   cursor: pointer;
+
   transition:
     color 160ms ease,
     border-color 160ms ease;
@@ -70,6 +97,26 @@
 
   border-bottom: 1px solid var(--line-strong);
 }
+
+.app-logo-button {
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  transition: opacity 160ms ease;
+}
+
+.app-logo-button:hover {
+  opacity: 0.72;
+}
+
+.app-logo-button:focus-visible {
+  outline: 1px solid var(--ink-muted);
+  outline-offset: 6px;
+}
+
 .app-logo {
   display: block;
   width: 330px;
