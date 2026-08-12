@@ -11,6 +11,7 @@ from .views import (
     TrainingGuideListCreateAPIView,
     TrainingGuideRetrieveUpdateDestroyAPIView,
     PasswordResetConfirmAPIView,
+    VerifyEmailAPIView,
 )
 
 
@@ -19,6 +20,11 @@ urlpatterns = [
         "register/",
         RegisterAPIView.as_view(),
         name="register",
+    ),
+    path(
+        "verify-email/",
+        VerifyEmailAPIView.as_view(),
+        name="verify-email",
     ),
     path(
         "password-reset/",

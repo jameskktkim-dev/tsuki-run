@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import VerifyEmail from "./components/VerifyEmail";
 import MonthlyCalendar from "./components/MonthlyCalendar";
 import OpeningScreen from "./components/OpeningScreen";
 import HowItWorksModal from "./components/HowItWorksModal";
@@ -21,9 +22,7 @@ export default function App() {
     useState(false);
 
   const [isLoggedIn, setIsLoggedIn] =
-    useState(
-      isAuthenticated()
-    );
+    useState(isAuthenticated());
 
   const [authScreen, setAuthScreen] =
     useState("login");
@@ -33,24 +32,29 @@ export default function App() {
     setShowHowItWorks,
   ] = useState(false);
 
+  const pathname = window.location.pathname;
+
   const isPasswordResetPage =
-    window.location.pathname ===
-    "/reset-password";
+    pathname === "/reset-password";
+
+  const isEmailVerificationPage =
+    pathname === "/verify-email";
 
   const searchParams =
     new URLSearchParams(
       window.location.search
     );
 
-  const resetUid =
+  const uid =
     searchParams.get("uid") ?? "";
 
-  const resetToken =
+  const token =
     searchParams.get("token") ?? "";
 
   useEffect(() => {
     function handleAuthExpired() {
       logout();
+
       setIsLoggedIn(false);
       setAuthScreen("login");
     }
@@ -95,14 +99,28 @@ export default function App() {
   }
 
   if (
+    isEmailVerificationPage &&
+    uid &&
+    token
+  ) {
+    return (
+      <VerifyEmail
+        uid={uid}
+        token={token}
+        onBackToLogin={handleBackToLogin}
+      />
+    );
+  }
+
+  if (
     isPasswordResetPage &&
-    resetUid &&
-    resetToken
+    uid &&
+    token
   ) {
     return (
       <ResetPassword
-        uid={resetUid}
-        token={resetToken}
+        uid={uid}
+        token={token}
         onBackToLogin={handleBackToLogin}
       />
     );

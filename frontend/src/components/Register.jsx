@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  login,
-  register,
-} from "../api/auth";
+import { register } from "../api/auth";
 import tsukiLogo from "../assets/tsuki-run-logo.svg";
 import "./Login.css";
 
@@ -64,7 +61,6 @@ function getErrorMessage(error) {
 }
 
 export default function Register({
-  onRegister,
   onShowLogin,
 }) {
   const [username, setUsername] = useState("");
@@ -77,7 +73,11 @@ export default function Register({
   ] = useState("");
 
   const [error, setError] = useState("");
+
   const [isSubmitting, setIsSubmitting] =
+    useState(false);
+
+  const [isRegistered, setIsRegistered] =
     useState(false);
 
   async function handleSubmit(event) {
@@ -102,14 +102,61 @@ export default function Register({
         password
       );
 
-      await login(cleanUsername, password);
-
-      onRegister();
+      setIsRegistered(true);
     } catch (requestError) {
-      setError(getErrorMessage(requestError));
+      setError(
+        getErrorMessage(requestError)
+      );
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (isRegistered) {
+    return (
+      <main className="auth-page">
+        <section className="auth-panel">
+          <div className="auth-brand">
+            <img
+              src={tsukiLogo}
+              alt="Tsuki Run"
+              className="auth-logo"
+            />
+          </div>
+
+          <div className="auth-content">
+            <header className="auth-header">
+              <p className="auth-eyebrow">
+                One more step
+              </p>
+
+              <h1 className="auth-title">
+                Check your email.
+              </h1>
+
+              <p className="auth-description">
+                We sent a verification link to{" "}
+                <strong>{email}</strong>.
+                Open the link to finish creating
+                your Tsuki Run account.
+              </p>
+            </header>
+
+            <button
+              type="button"
+              className="auth-submit"
+              onClick={onShowLogin}
+            >
+              Back to sign in
+            </button>
+          </div>
+        </section>
+
+        <p className="auth-footer">
+          Plan · Run · Reflect
+        </p>
+      </main>
+    );
   }
 
   return (
@@ -134,8 +181,8 @@ export default function Register({
             </h1>
 
             <p className="auth-description">
-              Create a space for your plans, runs, and
-              reflections.
+              Create a space for your plans, runs,
+              and reflections.
             </p>
           </header>
 
@@ -233,7 +280,9 @@ export default function Register({
           </form>
 
           <div className="auth-switch">
-            <span>Already have an account?</span>
+            <span>
+              Already have an account?
+            </span>
 
             <button
               type="button"

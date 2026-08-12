@@ -225,3 +225,30 @@ export async function confirmPasswordReset(
 
   return response.json();
 }
+
+export async function verifyEmail(uid, token) {
+  const response = await fetch(
+    `${API_BASE_URL}/verify-email/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid,
+        token,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const message = await parseError(
+      response,
+      "Unable to verify your email."
+    );
+
+    throw new Error(message);
+  }
+
+  return response.json();
+}

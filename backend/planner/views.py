@@ -38,6 +38,171 @@ class RegisterAPIView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(
+            data=request.data
+        )
+
+        serializer.is_valid(
+            raise_exception=True
+        )
+
+        user = serializer.save()
+
+        uid = urlsafe_base64_encode(
+            force_bytes(user.pk)
+        )
+
+        token = default_token_generator.make_token(
+            user
+        )
+
+        verify_url = (
+            f"{settings.FRONTEND_URL}"
+            f"/verify-email"
+            f"?uid={uid}&token={token}"
+        )
+
+        if not settings.RESEND_API_KEY:
+            raise RuntimeError(
+                "RESEND_API_KEY is not configured."
+            )
+
+        resend.api_key = settings.RESEND_API_KEY
+
+        resend.Emails.send(
+            {
+                "from": (
+                    "Tsuki Run "
+                    "<onboarding@resend.dev>"
+                ),
+                "to": [user.email],
+                "subject": (
+                    "Verify your Tsuki Run email"
+                ),
+                "html": f"""
+                <div style="
+                    font-family: Arial, sans-serif;
+                    line-height: 1.7;
+                    color: #1f1c1a;
+                ">
+                    <p>
+                        Welcome to Tsuki Run.
+                    </p>
+
+                    <p>
+                        Please verify your email
+                        address to finish creating
+                        your account.
+                    </p>
+
+                    <p>
+                        <a href="{verify_url}">
+                            Verify your email
+                        </a>
+                    </p>
+
+                    <p>
+                        If you did not create this
+                        account, you can ignore
+                        this email.
+                    </p>
+                </div>
+                """,
+            }
+        )
+
+        return Response(
+            {
+                "detail": (
+                    "Account created. Please check "
+                    "your email to verify your account."
+                )
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class VerifyEmailAPIView(
+    generics.GenericAPIView
+):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        uid = request.data.get("uid", "")
+        token = request.data.get("token", "")
+
+        if not uid or not token:
+            return Response(
+                {
+                    "detail": (
+                        "Missing email verification "
+                        "information."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            user_id = force_str(
+                urlsafe_base64_decode(uid)
+            )
+
+            user = User.objects.get(
+                pk=user_id
+            )
+        except (
+            ValueError,
+            TypeError,
+            OverflowError,
+            User.DoesNotExist,
+        ):
+            return Response(
+                {
+                    "detail": (
+                        "This verification link "
+                        "is invalid."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if user.is_active:
+            return Response(
+                {
+                    "detail": (
+                        "Your email is already verified."
+                    )
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        if not default_token_generator.check_token(
+            user,
+            token,
+        ):
+            return Response(
+                {
+                    "detail": (
+                        "This verification link "
+                        "is invalid or has expired."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user.is_active = True
+        user.save(update_fields=["is_active"])
+
+        return Response(
+            {
+                "detail": (
+                    "Your email has been verified."
+                )
+            },
+            status=status.HTTP_200_OK,
+        )
+
 
 class PasswordResetRequestAPIView(
     generics.GenericAPIView
