@@ -60,6 +60,8 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-3);
   margin-bottom: 18px;
 }
 
@@ -83,6 +85,33 @@
 }
 
 .app-logout:hover {
+  border-bottom-color: var(--ink);
+  color: var(--ink);
+}
+
+.app-how-it-works {
+  padding: 0 0 3px;
+  border: none;
+  border-bottom: 1px solid rgba(47, 43, 40, 0.22);
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: rgba(47, 43, 40, 0.46);
+
+  cursor: pointer;
+
+  transition:
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.app-how-it-works:hover {
   border-bottom-color: var(--ink);
   color: var(--ink);
 }

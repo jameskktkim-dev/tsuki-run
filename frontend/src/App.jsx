@@ -12,6 +12,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import MonthlyCalendar from "./components/MonthlyCalendar";
 import OpeningScreen from "./components/OpeningScreen";
+import HowItWorksModal from "./components/HowItWorksModal";
 
 import tsukiLogo from "./assets/tsuki-run-logo.svg";
 
@@ -26,6 +27,11 @@ export default function App() {
 
   const [authScreen, setAuthScreen] =
     useState("login");
+
+  const [
+    showHowItWorks,
+    setShowHowItWorks,
+  ] = useState(false);
 
   const isPasswordResetPage =
     window.location.pathname ===
@@ -148,33 +154,52 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <div className="app-utility">
+    <>
+      <main className="app-shell">
+        <header className="app-header">
+          <div className="app-utility">
+            <button
+              type="button"
+              className="app-logout"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+
+            <button
+              type="button"
+              className="app-how-it-works"
+              onClick={() =>
+                setShowHowItWorks(true)
+              }
+            >
+              How it works
+            </button>
+          </div>
+
           <button
             type="button"
-            className="app-logout"
-            onClick={handleLogout}
+            className="app-logo-button"
+            onClick={handleHome}
+            aria-label="Return to Tsuki Run home"
           >
-            Log out
+            <img
+              src={tsukiLogo}
+              alt="Tsuki Run"
+              className="app-logo"
+            />
           </button>
-        </div>
+        </header>
 
-        <button
-          type="button"
-          className="app-logo-button"
-          onClick={handleHome}
-          aria-label="Return to Tsuki Run home"
-        >
-          <img
-            src={tsukiLogo}
-            alt="Tsuki Run"
-            className="app-logo"
-          />
-        </button>
-      </header>
+        <MonthlyCalendar />
+      </main>
 
-      <MonthlyCalendar />
-    </main>
+      <HowItWorksModal
+        isOpen={showHowItWorks}
+        onClose={() =>
+          setShowHowItWorks(false)
+        }
+      />
+    </>
   );
 }
